@@ -12,6 +12,7 @@ export default function TabTwoScreen() {
     );
 
     const onProfilePress = () => {
+
         console.log('you pressed the profile button');
     };
 
