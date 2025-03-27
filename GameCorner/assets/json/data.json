@@ -5,14 +5,24 @@
       "email": "john.doe@example.com",
       "pwd": "hashed_password_123",
       "prenom": "John",
-      "nom": "Doe"
+      "nom": "Doe",
+      "image_profil": "https://m.media-amazon.com/images/I/91jvZUxquKL._AC_SL1500_.jpg"
     },
     {
       "id": 2,
       "email": "jane.smith@example.com",
       "pwd": "hashed_password_456",
       "prenom": "Jane",
-      "nom": "Smith"
+      "nom": "Smith",
+      "image_profil": "https://m.media-amazon.com/images/I/91jvZUxquKL._AC_SL1500_.jpg"
+    },
+    {
+      "id": 4,
+      "email": "test@test.com",
+      "pwd": "test",
+      "prenom": "Goat",
+      "nom": "Chevre",
+      "image_profil": "https://m.media-amazon.com/images/I/91jvZUxquKL._AC_SL1500_.jpg"
     }
   ],
   "produits": [
@@ -20,8 +30,7 @@
       "id": 101,
       "name": "The Legend of Zelda: Breath of the Wild",
       "photo": [
-        "https://example.com/images/zelda1.jpg",
-        "https://example.com/images/zelda2.jpg"
+        "https://m.media-amazon.com/images/I/91jvZUxquKL._AC_SL1500_.jpg"
       ],
       "prix": 45.99,
       "desc": "Un jeu d'aventure en monde ouvert sur Nintendo Switch.",
