@@ -30,7 +30,7 @@
       "id": 101,
       "name": "The Legend of Zelda: Breath of the Wild",
       "photo": [
-        "https://m.media-amazon.com/images/I/91jvZUxquKL._AC_SL1500_.jpg"
+        "https://upload.wikimedia.org/wikipedia/en/a/a2/The_Legend_of_Zelda_Breath_of_the_Wild.jpg"
       ],
       "prix": 45.99,
       "desc": "Un jeu d'aventure en monde ouvert sur Nintendo Switch.",
@@ -42,8 +42,7 @@
       "id": 102,
       "name": "Cyberpunk 2077",
       "photo": [
-        "https://example.com/images/cyberpunk1.jpg",
-        "https://example.com/images/cyberpunk2.jpg"
+        "https://upload.wikimedia.org/wikipedia/en/9/9f/Cyberpunk_2077_box_art.jpg"
       ],
       "prix": 29.99,
       "desc": "Un RPG futuriste dans un univers cyberpunk.",
@@ -55,14 +54,97 @@
       "id": 103,
       "name": "Red Dead Redemption 2",
       "photo": [
-        "https://example.com/images/rdr2-1.jpg",
-        "https://example.com/images/rdr2-2.jpg"
+        "https://upload.wikimedia.org/wikipedia/en/4/44/Red_Dead_Redemption_II.jpg"
       ],
       "prix": 39.99,
       "desc": "Un western en monde ouvert acclamé par la critique.",
       "etat": "Bon état",
       "marchand": 1,
       "vendu": true
+    },
+    {
+      "id": 116,
+      "name": "Ghost of Tsushima",
+      "photo": [
+        "https://upload.wikimedia.org/wikipedia/en/a/a7/Ghost_of_Tsushima.jpg"
+      ],
+      "prix": 49.99,
+      "desc": "Un jeu d'action et d'aventure dans le Japon féodal.",
+      "etat": "Neuf",
+      "marchand": 3,
+      "vendu": false
+    },
+    {
+      "id": 117,
+      "name": "Sekiro: Shadows Die Twice",
+      "photo": [
+        "https://upload.wikimedia.org/wikipedia/en/9/9d/Sekiro_Shadows_Die_Twice_cover.jpg"
+      ],
+      "prix": 39.99,
+      "desc": "Un jeu d'action exigeant signé FromSoftware.",
+      "etat": "Très bon état",
+      "marchand": 4,
+      "vendu": false
+    },
+    {
+      "id": 118,
+      "name": "NBA 2K23",
+      "photo": [
+        "https://upload.wikimedia.org/wikipedia/en/7/7d/NBA_2K23_cover.jpg"
+      ],
+      "prix": 44.99,
+      "desc": "Le jeu de basket le plus réaliste du marché.",
+      "etat": "Bon état",
+      "marchand": 2,
+      "vendu": false
+    },
+    {
+      "id": 119,
+      "name": "Animal Crossing: New Horizons",
+      "photo": [
+        "https://upload.wikimedia.org/wikipedia/en/a/a3/Animal_Crossing_New_Horizons.jpg"
+      ],
+      "prix": 39.99,
+      "desc": "Créez votre propre île et vivez une vie paisible.",
+      "etat": "Très bon état",
+      "marchand": 1,
+      "vendu": false
+    },
+    {
+      "id": 120,
+      "name": "Call of Duty: Modern Warfare II",
+      "photo": [
+        "https://upload.wikimedia.org/wikipedia/en/0/02/Call_of_Duty_Modern_Warfare_II_cover.jpg"
+      ],
+      "prix": 59.99,
+      "desc": "Un FPS explosif et réaliste.",
+      "etat": "Neuf",
+      "marchand": 5,
+      "vendu": false
+    },
+    {
+      "id": 121,
+      "name": "Mario Kart 8 Deluxe",
+      "photo": [
+        "https://upload.wikimedia.org/wikipedia/en/2/23/Mario_Kart_8_Deluxe.png"
+      ],
+      "prix": 49.99,
+      "desc": "Le jeu de course fun et compétitif de Nintendo.",
+      "etat": "Très bon état",
+      "marchand": 1,
+      "vendu": false
+    },
+    {
+      "id": 122,
+      "name": "The Last of Us Part II",
+      "photo": [
+        "https://upload.wikimedia.org/wikipedia/en/4/4f/The_Last_of_Us_Part_II.jpg"
+      ],
+      "prix": 39.99,
+      "desc": "Un récit poignant et intense dans un monde post-apocalyptique.",
+      "etat": "Bon état",
+      "marchand": 3,
+      "vendu": false
     }
   ]
 }

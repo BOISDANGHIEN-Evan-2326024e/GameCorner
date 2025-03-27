@@ -7,6 +7,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 
+
 import styles from '../../assets/styles/item.styles';
 import data from '../../assets/json/data.json';
 import uri from "ajv/lib/runtime/uri";
@@ -27,11 +28,8 @@ export default function Product() {
         <ParallaxScrollView
             headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
             headerImage={
-                <IconSymbol
-                    size={310}
-                    color="#808080"
-                    name="chevron.left.forwardslash.chevron.right"
-                    style={styles.headerImage}
+                <Image
+                    source={{uri:"https://i.ytimg.com/vi/va7jEVSPcAc/sddefault.jpg"}}
                 />
             }>
             <ThemedView style={styles.titleContainer}>
@@ -39,19 +37,20 @@ export default function Product() {
                 <ThemedText type="title">{product.prix} €</ThemedText>
             </ThemedView>
 
-            {/* Carousel d'images */}
+            {/* Caroussel d'images */}
             <ScrollView horizontal>
                 {product.photo.map((imageUrl, index) => (
                     <Image
                         key={index}
                         source={{ uri: imageUrl }}
                         style={{ width: 200, height: 200, marginRight: 10 }}
-                        resizeMode="cover"
                     />
                 ))}
             </ScrollView>
-
-            <ThemedText>{product.desc}</ThemedText>
+            <Image
+                source={{uri:"https://i.ytimg.com/vi/va7jEVSPcAc/sddefault.jpg"}}
+                style={{ width: 200, height: 200, marginRight: 10 }}
+            />
 
             <Collapsible title="Description">
                 <ThemedText>{product.desc}</ThemedText>
@@ -64,11 +63,6 @@ export default function Product() {
             <Collapsible title="Marque">
                 <ThemedText>Nintendo (pour The Legend of Zelda)</ThemedText>
 
-            </Collapsible>
-            <Collapsible title="Images">
-                <Image>
-                    source={{uri:"https://example.com/images/zelda1.jpg"}};
-                </Image>
             </Collapsible>
             <Collapsible title="Couleur">
                 <ThemedText>Les couleurs du jeu varient (monde ouvert)</ThemedText>
