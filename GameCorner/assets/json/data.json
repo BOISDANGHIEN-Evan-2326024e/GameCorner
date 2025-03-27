@@ -1,0 +1,59 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "john.doe@example.com",
+      "pwd": "hashed_password_123",
+      "prenom": "John",
+      "nom": "Doe"
+    },
+    {
+      "id": 2,
+      "email": "jane.smith@example.com",
+      "pwd": "hashed_password_456",
+      "prenom": "Jane",
+      "nom": "Smith"
+    }
+  ],
+  "produits": [
+    {
+      "id": 101,
+      "name": "The Legend of Zelda: Breath of the Wild",
+      "photo": [
+        "https://example.com/images/zelda1.jpg",
+        "https://example.com/images/zelda2.jpg"
+      ],
+      "prix": 45.99,
+      "desc": "Un jeu d'aventure en monde ouvert sur Nintendo Switch.",
+      "etat": "Très bon état",
+      "marchand": 1,
+      "vendu": false
+    },
+    {
+      "id": 102,
+      "name": "Cyberpunk 2077",
+      "photo": [
+        "https://example.com/images/cyberpunk1.jpg",
+        "https://example.com/images/cyberpunk2.jpg"
+      ],
+      "prix": 29.99,
+      "desc": "Un RPG futuriste dans un univers cyberpunk.",
+      "etat": "Neuf",
+      "marchand": 2,
+      "vendu": false
+    },
+    {
+      "id": 103,
+      "name": "Red Dead Redemption 2",
+      "photo": [
+        "https://example.com/images/rdr2-1.jpg",
+        "https://example.com/images/rdr2-2.jpg"
+      ],
+      "prix": 39.99,
+      "desc": "Un western en monde ouvert acclamé par la critique.",
+      "etat": "Bon état",
+      "marchand": 1,
+      "vendu": true
+    }
+  ]
+}
