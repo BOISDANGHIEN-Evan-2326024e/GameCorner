@@ -1,11 +1,30 @@
-import { Image, StyleSheet, Platform, Button, TextInput, TouchableOpacity } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useState } from 'react';
+import { StyleSheet, Button, TextInput, TouchableOpacity, Text } from 'react-native';
+import {ThemedText} from "@/components/ThemedText";
+import {HelloWave} from "@/components/HelloWave";
+
+const users = require('../assets/json/data.json'); // Charge le fichier JSON local
 
 // @ts-ignore
 export default function HomeScreen({ logMe }) {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+
+    const handleLogin = () => {
+        // Vérifier si l'utilisateur existe avec l'email et le mot de passe
+        const user = users.users.find(
+            (user: { email: string; pwd: string; }) => user.email === email && user.pwd === password
+        );
+
+        if (user) {
+            logMe(true); // Si l'utilisateur est trouvé, connexion réussie
+        } else {
+            setError('Identifiants incorrects');
+        }
+    };
+
     return (
         <ThemedView style={styles.container}>
             <ThemedText type="title" style={styles.title}>Connexion</ThemedText>
@@ -17,6 +36,8 @@ export default function HomeScreen({ logMe }) {
                 placeholderTextColor="#eee"
                 keyboardType="email-address"
                 autoCapitalize="none"
+                value={email}
+                onChangeText={setEmail}
             />
 
             <TextInput
@@ -24,10 +45,14 @@ export default function HomeScreen({ logMe }) {
                 placeholder="Mot de passe"
                 placeholderTextColor="#eee"
                 secureTextEntry
+                value={password}
+                onChangeText={setPassword}
             />
 
+            {error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
+
             <TouchableOpacity style={styles.button}>
-                <Button title="Se connecter" onPress={() => logMe(true)} />
+                <Button title="Se connecter" onPress={handleLogin} />
             </TouchableOpacity>
         </ThemedView>
     );
@@ -38,13 +63,13 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#606060", // Fond gris
+        backgroundColor: "#606060",
         padding: 20,
     },
     title: {
         fontSize: 28,
         fontWeight: "bold",
-        color: "#93d49a", // Texte accentué en vert clair
+        color: "#93d49a",
         marginBottom: 20,
     },
     input: {
@@ -57,7 +82,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         fontSize: 16,
         color: "#fff",
-        backgroundColor: "rgba(147, 212, 154, 0.3)", // Fond vert transparent
+        backgroundColor: "rgba(147, 212, 154, 0.3)",
     },
     button: {
         marginTop: 20,
@@ -65,12 +90,12 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 30,
         borderRadius: 10,
-        alignItems: "center", // 🔥 Centre le texte horizontalement
-        justifyContent: "center", // 🔥 Centre le texte verticalement
+        alignItems: "center",
+        justifyContent: "center",
     },
-    buttonText: {
-        fontSize: 18,
-        color: "#606060",
-        fontWeight: "bold",
-    },
+    error: {
+        color: "red",
+        marginTop: 10,
+        fontSize: 16,
+    }
 });
