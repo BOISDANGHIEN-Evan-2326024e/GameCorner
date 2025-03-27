@@ -1,5 +1,6 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
+
 import { Platform, ScrollView, View, StyleSheet } from 'react-native';
 import { ListProduct } from '@/components/listProduct/ListProduct';
 import { ThemedText } from '@/components/ThemedText';

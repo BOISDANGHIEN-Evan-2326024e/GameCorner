@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, FlatList, Text, TouchableOpacity, Image } from "react-native";
 import { SearchBar } from "@/components/SearchBar";
-import data from "../assets/json/data.json";
+import data from "../../assets/json/data.json";
+import { useNavigation } from '@react-navigation/native';
 
 export default function TabTwoScreen() {
     const [searchQuery, setSearchQuery] = useState('');
+    const navigation = useNavigation();
 
     const produits = data.produits;
     const filteredGames = produits.filter((produit) =>
@@ -12,7 +14,6 @@ export default function TabTwoScreen() {
     );
 
     const onProfilePress = () => {
-
         console.log('you pressed the profile button');
     };
 

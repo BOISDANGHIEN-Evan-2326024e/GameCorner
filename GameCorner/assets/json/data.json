@@ -3,16 +3,26 @@
     {
       "id": 1,
       "email": "john.doe@example.com",
-      "pwd": "hashed_password_123",
+      "pwd": "123",
       "prenom": "John",
-      "nom": "Doe"
+      "nom": "Doe",
+      "image_profil": "https://m.media-amazon.com/images/I/91jvZUxquKL._AC_SL1500_.jpg"
     },
     {
       "id": 2,
       "email": "jane.smith@example.com",
       "pwd": "hashed_password_456",
       "prenom": "Jane",
-      "nom": "Smith"
+      "nom": "Smith",
+      "image_profil": "https://m.media-amazon.com/images/I/91jvZUxquKL._AC_SL1500_.jpg"
+    },
+    {
+      "id": 4,
+      "email": "test@test.com",
+      "pwd": "test",
+      "prenom": "Goat",
+      "nom": "Chevre",
+      "image_profil": "https://m.media-amazon.com/images/I/91jvZUxquKL._AC_SL1500_.jpg"
     }
   ],
   "produits": [
