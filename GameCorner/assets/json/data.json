@@ -2,7 +2,7 @@
   "users": [
     {
       "id": 1,
-      "email": "john.doe@example.com",
+      "email": "john@gmail.com",
       "pwd": "123",
       "prenom": "John",
       "nom": "Doe",
