@@ -40,8 +40,6 @@ export function ListProduct({ horizontal = true, title = "Produits populaires" }
                 <Image
                     source={{ uri: product.photo[0] }}
                     style={styles.productImage}
-
-
                     resizeMode="cover"
                 />
                 <View style={styles.productInfo}>
