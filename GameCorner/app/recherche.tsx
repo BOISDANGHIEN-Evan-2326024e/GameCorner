@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, FlatList, Text, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, FlatList, Text, Button, TouchableOpacity, Image } from "react-native";
 import { SearchBar } from "@/components/SearchBar";
 import data from "../assets/json/data.json";
+import {ProfilScreen} from "@/app/profil";
 
-export default function TabTwoScreen() {
+export default function Recherche() {
     const [searchQuery, setSearchQuery] = useState('');
+    const [page, setPage] = useState('list')
 
     const produits = data.produits;
     const filteredGames = produits.filter((produit) =>
@@ -12,38 +14,47 @@ export default function TabTwoScreen() {
     );
 
     const onProfilePress = () => {
-
+        setPage("user")
         console.log('you pressed the profile button');
     };
 
+
+    const listComponant = <>
+        <View style={styles.header}>
+            <SearchBar onSearch={setSearchQuery} />
+            <TouchableOpacity onPress={onProfilePress} style={styles.profileImageContainer}>
+                <Image
+                    source={{ uri: "https://m.media-amazon.com/images/I/91jvZUxquKL._AC_SL1500_.jpg" }}
+                    style={styles.profileImage}
+                />
+            </TouchableOpacity>
+        </View>
+        <FlatList
+            data={filteredGames}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+                <View style={styles.listItem}>
+                    <Text style={styles.gameText}>{item.name}</Text>
+                    <Text style={styles.gameText}>{item.prix} €</Text>
+                    {item.photo.map((image, index) => (
+                        <Image
+                            key={index}
+                            source={{ uri: image }}
+                            style={styles.productImage}
+                        />
+                    ))}
+                </View>
+            )}
+        /></>
+
+    const userComponant = <>
+        <Text>Je suis un User</Text>
+    <Button onPress={() => {setPage("default")}} title={"Back"}/>
+    </>
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <SearchBar onSearch={setSearchQuery} />
-                <TouchableOpacity onPress={onProfilePress} style={styles.profileImageContainer}>
-                    <Image
-                        source={{ uri: "https://m.media-amazon.com/images/I/91jvZUxquKL._AC_SL1500_.jpg" }}
-                        style={styles.profileImage}
-                    />
-                </TouchableOpacity>
-            </View>
-            <FlatList
-                data={filteredGames}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                    <View style={styles.listItem}>
-                        <Text style={styles.gameText}>{item.name}</Text>
-                        <Text style={styles.gameText}>{item.prix} €</Text>
-                        {item.photo.map((image, index) => (
-                            <Image
-                                key={index}
-                                source={{ uri: image }}
-                                style={styles.productImage}
-                            />
-                        ))}
-                    </View>
-                )}
-            />
+            {page == 'user' && <ProfilScreen/>}
+            {page != 'user' && listComponant}
         </View>
     );
 }
