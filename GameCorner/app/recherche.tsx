@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, FlatList, Text, TouchableOpacity, Image } from "react-native";
+import {StyleSheet, View, FlatList, Text, TouchableOpacity, Image, Button} from "react-native";
 import { SearchBar } from "@/components/SearchBar";
 import data from "../assets/json/data.json";
 
@@ -19,6 +19,10 @@ export default function Recherche({ setPage }: RechercheProps) {
     const onProfilePress = () => {
         setPage("user");
     };
+
+    const goTest = () =>{
+        setPage("test")
+    }
 
     return (
         <View style={styles.container}>
@@ -48,6 +52,7 @@ export default function Recherche({ setPage }: RechercheProps) {
                     </View>
                 )}
             />
+            <Button title={'test'} onPress={goTest} />
         </View>
     );
 }
