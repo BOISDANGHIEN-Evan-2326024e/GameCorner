@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Login from "./login";
 import Recherche from "./recherche";
+import Router from "@/app/router";
 
 export default function App() {
     const [logged, setLogged] = useState(false);
@@ -10,7 +11,7 @@ export default function App() {
             {!logged ? (
                 <Login logMe={setLogged} />
             ) : (
-                <Recherche />
+                <Router />
             )}
         </>
     );
