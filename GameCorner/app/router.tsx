@@ -5,6 +5,7 @@ import data from "../assets/json/data.json";
 import Recherche from './recherche'
 import ProfilScreen from './profil'
 import Test from './test'
+import Accueil from './(tabs)/accueil';
 
 
 export default function Router() {
@@ -14,6 +15,7 @@ export default function Router() {
         <>
             {page === 'list' && <Recherche setPage={setPage} />}
             {page === 'user' && <ProfilScreen setPage={setPage} />}
+            {page === 'accueil' && <Accueil setPage={setPage} />}
             {page === 'test' && <Test setPage={setPage} />}
         </>
 
