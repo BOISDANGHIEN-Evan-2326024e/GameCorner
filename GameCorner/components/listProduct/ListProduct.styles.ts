@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     top: 8,
     right: 8,
-    backgroundColor: 'rgba(244, 67, 54, 0.8)', // Rouge semi-transparent
+    backgroundColor: 'rgba(244, 67, 54, 0.8)',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 4,

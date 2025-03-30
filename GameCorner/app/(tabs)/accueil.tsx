@@ -19,14 +19,14 @@ export default function Accueil({ setPage }: Acceuil) {
 
   return (
     <ThemedView style={styles.container}>
-      {/* Header with logo and profile */}
       <View style={styles.header}>
         <ThemedText style={{ color: '#FFFFFF', fontSize: 18, fontWeight: 'bold' }}>
           GameCorner
         </ThemedText>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setPage && setPage("user")}>
           <Ionicons name="person-circle-outline" size={28} color="#FFFFFF" />
         </TouchableOpacity>
+
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>

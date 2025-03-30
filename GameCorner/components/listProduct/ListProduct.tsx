@@ -22,7 +22,6 @@ type ListProductProps = {
 };
 
 export function ListProduct({ horizontal = true, title = "Produits populaires" }: ListProductProps) {
-  // Utiliser les produits du fichier JSON
     const products = data.produits || [];
 
     return (
