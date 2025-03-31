@@ -7,19 +7,19 @@ import {HelloWave} from "@/components/HelloWave";
 const users = require('../assets/json/data.json'); // Charge le fichier JSON local
 
 // @ts-ignore
-export default function HomeScreen({ logMe }) {
+export default function HomeScreen({ logMe, setIdUser }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
     const handleLogin = () => {
-        // Vérifier si l'utilisateur existe avec l'email et le mot de passe
         const user = users.users.find(
             (user: { email: string; pwd: string; }) => user.email === email && user.pwd === password
         );
 
         if (user) {
-            logMe(true); // Si l'utilisateur est trouvé, connexion réussie
+            logMe(true);
+            setIdUser(user.id);
         } else {
             setError('Identifiants incorrects');
         }

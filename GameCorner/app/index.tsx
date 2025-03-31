@@ -5,13 +5,14 @@ import Router from "@/app/router";
 
 export default function App() {
     const [logged, setLogged] = useState(false);
+    const [idUser, setIdUser] = useState("");
 
     return (
         <>
             {!logged ? (
-                <Login logMe={setLogged} />
+                <Login logMe={setLogged} setIdUser={setIdUser} />
             ) : (
-                <Router />
+                <Router IdUser={idUser} />
             )}
         </>
     );
