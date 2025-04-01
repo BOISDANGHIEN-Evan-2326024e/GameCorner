@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Image, Button, ScrollView } from 'react-native';
 import { Collapsible } from '@/components/Collapsible';
 import { ExternalLink } from '@/components/ExternalLink';
@@ -7,14 +7,22 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 
-
 import styles from '../../assets/styles/item.styles';
 import data from '../../assets/json/data.json';
-import uri from "ajv/lib/runtime/uri";
 
-export default function Product() {
-    const product = data.produits.find(p => p.id === 101);
+// Définir un type pour les props
+type ProductProps = {
+    productId: number;
+};
+
+export default function Product({ productId }: ProductProps) {
+    useEffect(() => {
+        console.log('Component Product rendu avec ID:', productId);
+    }, [productId]);
+
+    const product = data.produits.find(p => p.id === productId);
     const marchandUser = data.users.find(user => user.id === product?.marchand);
+
     if (!product) {
         return (
             <ThemedView>
@@ -22,10 +30,12 @@ export default function Product() {
             </ThemedView>
         );
     }
+
     const [isSold, setIsSold] = useState(product.vendu);
     const vendProduit = () => {
         setIsSold(true); // Marquer le produit comme vendu
     };
+    console.log("OUVREEE TOIII")
     return (
         <ParallaxScrollView
             headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
@@ -55,7 +65,6 @@ export default function Product() {
 
             <Collapsible title="Marque">
                 <ThemedText>Nintendo (pour The Legend of Zelda)</ThemedText>
-
             </Collapsible>
 
             <Collapsible title="Nombres de membres intéressés">
