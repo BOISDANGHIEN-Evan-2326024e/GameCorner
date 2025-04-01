@@ -6,6 +6,7 @@ import ProfilScreen from './profil';
 import Test from './test';
 import Accueil from './(tabs)/accueil';
 import CustomBottomBar from './bottomBar';
+import Product from "@/components/Product/Product";
 
 export default function Router({ IdUser }: { IdUser: number }) {
     const [user, setUser] = useState(data.users);
@@ -24,6 +25,7 @@ export default function Router({ IdUser }: { IdUser: number }) {
                     <ProfilScreen setPage={setPage} UserData={User} />}
                 {page === 'accueil' && <Accueil setPage={setPage} />}
                 {page === 'test' && <Test setPage={setPage} />}
+                {page === 'produit' && <Product setPage={setPage}/>}
             </View>
 
             <CustomBottomBar page={page} setPage={setPage} />
