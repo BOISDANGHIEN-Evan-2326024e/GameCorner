@@ -19,12 +19,13 @@ type Product = {
 type ListProductProps = {
     horizontal?: boolean;
     title?: string;
+    setPage: (page: string) => void;
 };
 
-export function ListProduct({ horizontal = true, title = "Produits populaires" }: ListProductProps) {
+export function ListProduct({ horizontal = true, title = "Produits populaires", setPage }: ListProductProps) {
     const products = data.produits || [];
     const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
-    const [modalVisible, setModalVisible] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false)
 
     const openProduct = (productId: number) => {
         setSelectedProductId(productId);
@@ -34,10 +35,6 @@ export function ListProduct({ horizontal = true, title = "Produits populaires" }
     const closeProduct = () => {
         setModalVisible(false);
     };
-
-    const handleClick=()=>{
-        console.log("handleClick","ouvre toi");
-    }
     return (
         <View style={styles.container}>
             <ThemedText type="subtitle" style={styles.sectionTitle}>{title}</ThemedText>
@@ -51,7 +48,7 @@ export function ListProduct({ horizontal = true, title = "Produits populaires" }
                     <Pressable
                         key={product.id}
                         style={styles.productCard}
-                        onPress={() => {console.log("ouvre toi"); openProduct(product.id)}}
+                        onPress={() => {openProduct(product.id)}}
                     >
                         <Image
                             source={{ uri: product.photo[0] }}
@@ -60,7 +57,7 @@ export function ListProduct({ horizontal = true, title = "Produits populaires" }
 
                         />
                         <View style={styles.productInfo}>
-                            <ThemedText style={styles.productName} numberOfLines={1} onPress={handleClick}>{product.name}</ThemedText>
+                            <ThemedText style={styles.productName} numberOfLines={1}>{product.name}</ThemedText>
                             <ThemedText style={styles.productPrice}>{product.prix} €</ThemedText>
                             {product.vendu && (
                                 <View style={styles.soldBadge}>
@@ -95,7 +92,7 @@ export function ListProduct({ horizontal = true, title = "Produits populaires" }
                         >
                             <ThemedText style={{ fontSize: 16, fontWeight: 'bold' }}>Fermer</ThemedText>
                         </Pressable>
-                        <Product productId={selectedProductId} />
+                        <Product productId={selectedProductId}  setPage={setPage}/>
                     </View>
                 )}
             </Modal>

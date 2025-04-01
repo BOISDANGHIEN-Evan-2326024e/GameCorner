@@ -9,16 +9,11 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 
 import styles from '../../assets/styles/item.styles';
 import data from '../../assets/json/data.json';
+import {User} from "@/Class/User";
 
-// Définir un type pour les props
-type ProductProps = {
-    productId: number;
-};
 
-export default function Product({ productId }: ProductProps) {
-    useEffect(() => {
-        console.log('Component Product rendu avec ID:', productId);
-    }, [productId]);
+
+export default function Product({ productId, setPage }: { productId: number, setPage: (page: string) => void }) {
 
     const product = data.produits.find(p => p.id === productId);
     const marchandUser = data.users.find(user => user.id === product?.marchand);
@@ -35,7 +30,6 @@ export default function Product({ productId }: ProductProps) {
     const vendProduit = () => {
         setIsSold(true); // Marquer le produit comme vendu
     };
-    console.log("OUVREEE TOIII")
     return (
         <ParallaxScrollView
             headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}

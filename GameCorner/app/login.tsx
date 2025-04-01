@@ -1,8 +1,8 @@
 import { ThemedView } from '@/components/ThemedView';
 import { useState } from 'react';
-import { StyleSheet, Button, TextInput, TouchableOpacity, Text } from 'react-native';
-import {ThemedText} from "@/components/ThemedText";
-import {HelloWave} from "@/components/HelloWave";
+import { StyleSheet, TextInput, TouchableOpacity, Text, View } from 'react-native';
+import { ThemedText } from "@/components/ThemedText";
+import { HelloWave } from "@/components/HelloWave";
 import React from 'react';
 
 const users = require('../assets/json/data.json'); // Charge le fichier JSON local
@@ -28,33 +28,41 @@ export default function HomeScreen({ logMe, setIdUser }) {
 
     return (
         <ThemedView style={styles.container}>
-            <ThemedText type="title" style={styles.title}>Connexion</ThemedText>
-            <HelloWave />
+            <View style={styles.logoContainer}>
+                <ThemedText type="title" style={styles.logoText}>GameCorner</ThemedText>
+                <HelloWave />
+            </View>
 
-            <TextInput
-                style={styles.input}
-                placeholder="Email"
-                placeholderTextColor="#eee"
-                keyboardType="email-address"
-                autoCapitalize="none"
-                value={email}
-                onChangeText={setEmail}
-            />
+            <View style={styles.formContainer}>
+                <ThemedText type="title" style={styles.title}>Connexion</ThemedText>
 
-            <TextInput
-                style={styles.input}
-                placeholder="Mot de passe"
-                placeholderTextColor="#eee"
-                secureTextEntry
-                value={password}
-                onChangeText={setPassword}
-            />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Email"
+                    placeholderTextColor="#9d9d9d"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    value={email}
+                    onChangeText={setEmail}
+                />
 
-            {error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Mot de passe"
+                    placeholderTextColor="#9d9d9d"
+                    secureTextEntry
+                    value={password}
+                    onChangeText={setPassword}
+                />
 
-            <TouchableOpacity style={styles.button}>
-                <Button title="Se connecter" onPress={handleLogin} />
-            </TouchableOpacity>
+                {error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
+
+                <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+                    <Text style={styles.loginButtonText}>Se connecter</Text>
+                </TouchableOpacity>
+
+
+            </View>
         </ThemedView>
     );
 }
@@ -64,39 +72,79 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#606060",
+        backgroundColor: "#121212",
         padding: 20,
+    },
+    logoContainer: {
+        marginBottom: 40,
+        alignItems: 'center',
+    },
+    logoText: {
+        fontSize: 36,
+        fontWeight: "bold",
+        color: "#ffffff",
+        marginBottom: 10,
+    },
+    waveIcon: {
+        marginTop: 10,
+    },
+    formContainer: {
+        width: '100%',
+        maxWidth: 400,
+        backgroundColor: '#1e1e1e',
+        borderRadius: 16,
+        padding: 30,
+        shadowColor: '#8257fe',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        elevation: 8,
     },
     title: {
         fontSize: 28,
         fontWeight: "bold",
-        color: "#93d49a",
-        marginBottom: 20,
+        color: "#8257fe",
+        marginBottom: 24,
+        textAlign: 'center',
     },
     input: {
-        width: "80%",
-        height: 50,
-        borderColor: "#93d49a",
+        width: "100%",
+        height: 55,
+        borderColor: "#333333",
         borderWidth: 2,
-        borderRadius: 10,
+        borderRadius: 12,
         paddingHorizontal: 15,
-        marginVertical: 10,
+        marginVertical: 12,
         fontSize: 16,
-        color: "#fff",
-        backgroundColor: "rgba(147, 212, 154, 0.3)",
+        color: "#ffffff",
+        backgroundColor: "rgba(30, 30, 30, 0.8)",
     },
-    button: {
-        marginTop: 20,
-        backgroundColor: "#93d49a",
-        paddingVertical: 12,
-        paddingHorizontal: 30,
-        borderRadius: 10,
+    loginButton: {
+        marginTop: 24,
+        backgroundColor: "#8257fe",
+        paddingVertical: 16,
+        borderRadius: 12,
         alignItems: "center",
         justifyContent: "center",
     },
+    loginButtonText: {
+        color: "#ffffff",
+        fontSize: 18,
+        fontWeight: "bold",
+    },
     error: {
-        color: "red",
+        color: "#ff6b6b",
         marginTop: 10,
         fontSize: 16,
+        textAlign: 'center',
+    },
+    optionsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 24,
+    },
+    optionText: {
+        color: "#8257fe",
+        fontSize: 14,
     }
 });

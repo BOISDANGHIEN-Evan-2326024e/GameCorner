@@ -10,9 +10,10 @@ interface RechercheProps {
     setPage: (page: string) => void;
     produits: any[];
     relations: any[];
+    setSelectedProductId?: (id: number) => void;
 }
 
-export default function Recherche({ setPage, produits, relations }: RechercheProps) {
+export default function Recherche({ setPage, produits, relations, setSelectedProductId }: RechercheProps) {
     const [searchQuery, setSearchQuery] = useState('');
     const [isModalVisible, setModalVisible] = useState(false);
     const [isCategoryModalVisible, setCategoryModalVisible] = useState(false);

@@ -6,6 +6,7 @@ import ProfilScreen from './profil';
 import Test from './test';
 import Accueil from './(tabs)/accueil';
 import CustomBottomBar from './bottomBar';
+import Product from "@/components/Product/Product";
 
 export default function Router({ IdUser }: { IdUser: number }) {
     const [user, setUser] = useState(data.users);
@@ -15,6 +16,7 @@ export default function Router({ IdUser }: { IdUser: number }) {
     const [favoris, setFavoris] = useState(data.favoris);
     const User = user.find((u: { id: number }) => u.id === IdUser) || null;
     const [page, setPage] = useState('recherche');
+    const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
     return (
         <View style={styles.container}>
@@ -24,6 +26,7 @@ export default function Router({ IdUser }: { IdUser: number }) {
                     <ProfilScreen setPage={setPage} UserData={User} />}
                 {page === 'accueil' && <Accueil setPage={setPage} />}
                 {page === 'test' && <Test setPage={setPage} />}
+                {page === 'produit' && <Product productId={selectedProductId || 0} setPage={setPage}/>}
             </View>
 
             <CustomBottomBar page={page} setPage={setPage} />
