@@ -10,13 +10,16 @@ import CustomBottomBar from './bottomBar';
 export default function Router({ IdUser }: { IdUser: number }) {
     const [user, setUser] = useState(data.users);
     const [produits, setProduits] = useState(data.produits);
+    const [relations, setRelations] = useState(data.relations);
+    const [categories, setCategories] = useState(data.categories);
+    const [favoris, setFavoris] = useState(data.favoris);
     const User = user.find((u: { id: number }) => u.id === IdUser) || null;
     const [page, setPage] = useState('recherche');
 
     return (
         <View style={styles.container}>
             <View style={styles.content}>
-                {page === 'recherche' && <Recherche setPage={setPage} />}
+                {page === 'recherche' && <Recherche setPage={setPage} produits={produits} relations={relations} />}
                 {page === 'user' &&
                     <ProfilScreen setPage={setPage} UserData={User} />}
                 {page === 'accueil' && <Accueil setPage={setPage} />}
