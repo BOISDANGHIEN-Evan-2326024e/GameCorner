@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { StyleSheet, Button, TextInput, TouchableOpacity, Text } from 'react-native';
 import {ThemedText} from "@/components/ThemedText";
 import {HelloWave} from "@/components/HelloWave";
+import React from 'react';
 
 const users = require('../assets/json/data.json'); // Charge le fichier JSON local
 
