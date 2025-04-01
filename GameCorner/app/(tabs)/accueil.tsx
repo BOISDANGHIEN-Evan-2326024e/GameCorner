@@ -18,9 +18,10 @@ import Header from '@/components/Header/Header';
 import styles from '../../assets/styles/accueil.styles';
 type Acceuil = {
   setPage: (page: string) => void;
+  setSelectedProductId: (productId: number) => void;
 };
 
-export default function Accueil({ setPage }: Acceuil) {
+export default function Accueil({ setPage, setSelectedProductId }: Acceuil) {
   const windowWidth = Dimensions.get('window').width;
   
   return (
@@ -86,7 +87,13 @@ export default function Accueil({ setPage }: Acceuil) {
               <ThemedText style={styles.seeAllText}>Voir tout</ThemedText>
             </TouchableOpacity>
           </View>
-          <ListProduct horizontal={true} title="" setPage={setPage} />
+          <ListProduct
+              horizontal={true}
+              title="Produits populaires"
+              setPage={setPage}
+              setSelectedProductId={setSelectedProductId}
+          />
+
         </View>
         
         {/* Produits récemment ajoutés */}
@@ -97,7 +104,13 @@ export default function Accueil({ setPage }: Acceuil) {
               <ThemedText style={styles.seeAllText}>Voir tout</ThemedText>
             </TouchableOpacity>
           </View>
-          <ListProduct horizontal={true} title="" setPage={setPage} />
+          <ListProduct
+              horizontal={true}
+              title="Produits populaires"
+              setPage={setPage}
+              setSelectedProductId={setSelectedProductId}
+          />
+
         </View>
         
         {/* Bannière promo */}

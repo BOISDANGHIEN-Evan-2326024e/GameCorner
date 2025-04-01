@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet } from 'react-native';
 import data from "../assets/json/data.json";
 import Recherche from './recherche';
 import ProfilScreen from './profil';
@@ -9,12 +9,12 @@ import CustomBottomBar from './bottomBar';
 import Product from "@/components/Product/Product";
 
 export default function Router({ IdUser }: { IdUser: number }) {
-    const [user, setUser] = useState(data.users);
-    const [produits, setProduits] = useState(data.produits);
-    const [relations, setRelations] = useState(data.relations);
-    const [categories, setCategories] = useState(data.categories);
-    const [favoris, setFavoris] = useState(data.favoris);
-    const User = user.find((u: { id: number }) => u.id === IdUser) || null;
+    const [users, setUser] = useState(data?.users || []);  // Utiliser un tableau vide par défaut
+    const [produits, setProduits] = useState(data?.produits || []);  // Utiliser un tableau vide par défaut
+    const [relations, setRelations] = useState(data?.relations || []);  // Utiliser un tableau vide par défaut
+    const [categories, setCategories] = useState(data?.categories || []);  // Utiliser un tableau vide par défaut
+    const [favoris, setFavoris] = useState(data?.favoris || []);  // Utiliser un tableau vide par défaut
+    const User = users.find((u: { id: number }) => u.id === IdUser) || null;  // Assurer que user est un tableau
     const [page, setPage] = useState('recherche');
     const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
@@ -22,11 +22,10 @@ export default function Router({ IdUser }: { IdUser: number }) {
         <View style={styles.container}>
             <View style={styles.content}>
                 {page === 'recherche' && <Recherche setPage={setPage} produits={produits} relations={relations} />}
-                {page === 'user' &&
-                    <ProfilScreen setPage={setPage} UserData={User} />}
-                {page === 'accueil' && <Accueil setPage={setPage} />}
+                {page === 'user' && <ProfilScreen setPage={setPage} UserData={User} />}
+                {page === 'accueil' && <Accueil setPage={setPage} setSelectedProductId={setSelectedProductId} />}
                 {page === 'test' && <Test setPage={setPage} />}
-                {page === 'produit' && <Product productId={selectedProductId || 0} setPage={setPage}/>}
+                {page === 'produit' && <Product productId={selectedProductId || 0} setPage={setPage} produits={produits} categories={categories} users={users} />}
             </View>
 
             <CustomBottomBar page={page} setPage={setPage} />

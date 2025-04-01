@@ -17,7 +17,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { User } from '@/Class/User';
 import data from '../assets/json/data.json';
 
-export default function ProfilScreen({ setPage, UserData }: { setPage: (page: string) => void, UserData: User }) {
+export default function ProfilScreen({ setPage, UserData }: { setPage: (page: string) => void, UserData: any }) {
   // État pour le mode édition
   const [isEditing, setIsEditing] = useState(false);
   
@@ -34,8 +34,6 @@ export default function ProfilScreen({ setPage, UserData }: { setPage: (page: st
   
   // Fonction pour sauvegarder les modifications
   const saveChanges = () => {
-    // Dans un vrai app, vous feriez un appel API ici
-    // Pour cet exemple, on simule juste un changement local
     if (UserData) {
       UserData.email = email;
       UserData.prenom = prenom;
