@@ -3,20 +3,26 @@ import { StyleSheet, View, FlatList, Text, TouchableOpacity, Image, Modal } from
 import { SearchBar } from "@/components/SearchBar";
 import { ThemedText } from "@/components/ThemedText";
 import { Ionicons } from "@expo/vector-icons";
+import Product from "@/components/Product/Product";
 
 interface RechercheProps {
     setPage: (page: string) => void;
     produits: any[];
     relations: any[];
+    setSelectedProductId?: (id: number) => void;
 }
 
-export default function Recherche({ setPage, produits, relations }: RechercheProps) {
+export default function Recherche({ setPage, produits, relations, setSelectedProductId }: RechercheProps) {
     const [searchQuery, setSearchQuery] = useState('');
     const [isModalVisible, setModalVisible] = useState(false);
     const [isCategoryModalVisible, setCategoryModalVisible] = useState(false);
     const [priceFilter, setPriceFilter] = useState<number | null>(null);
     const [consoleFilter, setConsoleFilter] = useState<number | null>(null);
     const [categoryFilter, setCategoryFilter] = useState<number | null>(null);
+
+    // État pour gérer l'affichage du produit dans un modal
+    const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
+    const [productModalVisible, setProductModalVisible] = useState(false);
 
     const consoleCategories = {
         Xbox: 13,
@@ -52,6 +58,23 @@ export default function Recherche({ setPage, produits, relations }: RecherchePro
 
         return matchesSearch && matchesPrice && matchesConsole && matchesCategory;
     });
+
+    // Fonction pour ouvrir le détail d'un produit
+    const openProduct = (productId: number) => {
+        if (setSelectedProductId) {
+            // Si nous utilisons le routeur global
+            setSelectedProductId(productId);
+            setPage("produit");
+        } else {
+            // Sinon utilise le modal local
+            setSelectedProduct(productId);
+            setProductModalVisible(true);
+        }
+    };
+
+    const closeProduct = () => {
+        setProductModalVisible(false);
+    };
 
     return (
         <View style={styles.container}>
@@ -103,13 +126,16 @@ export default function Recherche({ setPage, produits, relations }: RecherchePro
                 data={filteredGames}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <View style={styles.listItem}>
+                    <TouchableOpacity
+                        style={styles.listItem}
+                        onPress={() => openProduct(item.id)}
+                    >
                         <Text style={styles.gameText}>{item.name}</Text>
                         <Text style={styles.gameText}>{item.prix} €</Text>
-                        {item.photo.map((image, index) => (
+                        {item.photo.map((image: any, index: React.Key | null | undefined) => (
                             <Image key={index} source={{ uri: image }} style={styles.productImage} />
                         ))}
-                    </View>
+                    </TouchableOpacity>
                 )}
             />
 
@@ -168,6 +194,34 @@ export default function Recherche({ setPage, produits, relations }: RecherchePro
                         </TouchableOpacity>
                     </View>
                 </View>
+            </Modal>
+
+            {/* Modal pour afficher le détail du produit */}
+            <Modal
+                animationType="slide"
+                transparent={false}
+                visible={productModalVisible}
+                onRequestClose={closeProduct}
+            >
+                {selectedProduct !== null && (
+                    <View style={{ flex: 1 }}>
+                        <TouchableOpacity
+                            style={{
+                                position: 'absolute',
+                                top: 40,
+                                right: 20,
+                                zIndex: 1000,
+                                padding: 10,
+                                backgroundColor: 'rgba(0,0,0,0.2)',
+                                borderRadius: 20
+                            }}
+                            onPress={closeProduct}
+                        >
+                            <ThemedText style={{ fontSize: 16, fontWeight: 'bold' }}>Fermer</ThemedText>
+                        </TouchableOpacity>
+                        <Product productId={selectedProduct} setPage={setPage} />
+                    </View>
+                )}
             </Modal>
         </View>
     );
