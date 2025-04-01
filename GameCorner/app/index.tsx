@@ -5,7 +5,7 @@ import Router from "@/app/router";
 
 export default function App() {
     const [logged, setLogged] = useState(false);
-    const [idUser, setIdUser] = useState("");
+    const [idUser, setIdUser] = useState(0);
 
     return (
         <>
