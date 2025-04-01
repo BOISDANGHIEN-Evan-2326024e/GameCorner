@@ -19,12 +19,13 @@ type Product = {
 type ListProductProps = {
     horizontal?: boolean;
     title?: string;
+    setPage: (page: string) => void;
 };
 
-export function ListProduct({ horizontal = true, title = "Produits populaires" }: ListProductProps) {
+export function ListProduct({ horizontal = true, title = "Produits populaires", setPage }: ListProductProps) {
     const products = data.produits || [];
     const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
-    const [modalVisible, setModalVisible] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false)
 
     const openProduct = (productId: number) => {
         setSelectedProductId(productId);
@@ -47,7 +48,7 @@ export function ListProduct({ horizontal = true, title = "Produits populaires" }
                     <Pressable
                         key={product.id}
                         style={styles.productCard}
-                        onPress={() => openProduct(product.id)}
+                        onPress={() => {openProduct(product.id)}}
                     >
                         <Image
                             source={{ uri: product.photo[0] }}

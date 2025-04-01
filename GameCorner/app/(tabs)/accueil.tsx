@@ -86,7 +86,7 @@ export default function Accueil({ setPage }: Acceuil) {
               <ThemedText style={styles.seeAllText}>Voir tout</ThemedText>
             </TouchableOpacity>
           </View>
-          <ListProduct horizontal={true} title="" />
+          <ListProduct horizontal={true} title="" setPage={setPage} />
         </View>
         
         {/* Produits récemment ajoutés */}
@@ -97,7 +97,7 @@ export default function Accueil({ setPage }: Acceuil) {
               <ThemedText style={styles.seeAllText}>Voir tout</ThemedText>
             </TouchableOpacity>
           </View>
-          <ListProduct horizontal={true} title="" />
+          <ListProduct horizontal={true} title="" setPage={setPage} />
         </View>
         
         {/* Bannière promo */}
