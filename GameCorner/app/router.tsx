@@ -25,7 +25,7 @@ export default function Router({ IdUser }: { IdUser: number }) {
                 {page === 'user' && <ProfilScreen setPage={setPage} UserData={User} />}
                 {page === 'accueil' && <Accueil setPage={setPage} setSelectedProductId={setSelectedProductId} />}
                 {page === 'test' && <Test setPage={setPage} />}
-                {page === 'produit' && <Product productId={selectedProductId || 0} setPage={setPage} produits={produits} categories={categories} users={users} />}
+                {page === 'produit' && <Product productId={selectedProductId || 0} setPage={setPage} produits={produits} categories={categories} users={users} setProduits={setProduits} />}
             </View>
 
             <CustomBottomBar page={page} setPage={setPage} />

@@ -43,7 +43,6 @@ export default function Recherche({ setPage, produits, relations, setSelectedPro
 
     // Filtrer les produits en fonction des critères
     const filteredGames = produits.filter((produit) => {
-        // Filtre de recherche
         const matchesSearch = produit.name.toLowerCase().includes(searchQuery.toLowerCase());
         
         // Filtre de prix
