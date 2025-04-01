@@ -1,5 +1,3 @@
-import {StyleSheet, Image, Platform, TouchableOpacity, Button} from 'react-native';
-
 import { Collapsible } from '@/components/Collapsible';
 import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
