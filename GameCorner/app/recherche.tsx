@@ -41,6 +41,13 @@ export default function Recherche({ setPage, produits, relations, setSelectedPro
         10: "Puzzle",
     };
 
+    const openProduct = (productId: number) => {
+        if (setSelectedProductId) {
+            setSelectedProductId(productId);  // Met à jour l'ID du produit
+        }
+        setPage('produit');  // Change la page vers le composant Product
+    };
+
     // Filtrer les produits en fonction des critères
     const filteredGames = produits.filter((produit) => {
         const matchesSearch = produit.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -157,7 +164,8 @@ export default function Recherche({ setPage, produits, relations, setSelectedPro
                     renderItem={({item}) => (
                         <TouchableOpacity 
                             style={styles.listItem}
-                            onPress={() => {/* Navigation vers détail */}}
+                            onPress={() => {openProduct(item.id)}}
+                            
                         >
                             {item.photo && item.photo.length > 0 && (
                                 <Image

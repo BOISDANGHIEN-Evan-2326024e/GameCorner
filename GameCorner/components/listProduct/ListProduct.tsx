@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, View, Image, Pressable, Modal } from 'react-native';
+import { ScrollView, View, Image, Pressable, Modal, TouchableOpacity, Text } from 'react-native';
 import data from '../../assets/json/data.json';
 import { styles } from './ListProduct.styles';
 import { ThemedText } from '@/components/ThemedText';
@@ -16,67 +16,77 @@ type Product = {
     vendu: boolean;
 };
 
+// Modification du type ListProductProps pour inclure les users
 type ListProductProps = {
     horizontal?: boolean;
     title?: string;
     setPage: (page: string) => void;
     setSelectedProductId: (productId: number) => void;
-};
-
-export function ListProduct({ horizontal = true, title = "Produits populaires", setPage, setSelectedProductId }: ListProductProps) {
+    users?: any[]; // Ajouter les utilisateurs
+  };
+  
+  export function ListProduct({ 
+    horizontal = true, 
+    title = "Produits populaires", 
+    setPage, 
+    setSelectedProductId,
+    users = data.users // Utilisez data.users par défaut si non fourni
+  }: ListProductProps) {
     const products = data.produits || [];
-    const [modalVisible, setModalVisible] = useState(false)
-
+  
+    // Fonction pour trouver le nom du vendeur
+    const getSellerName = (marchandId: number) => {
+      const seller = users.find(user => user.id === marchandId);
+      return seller ? `${seller.prenom} ${seller.nom}` : "Vendeur inconnu";
+    };
+  
     const openProduct = (productId: number) => {
-        setSelectedProductId(productId);  // Met à jour l'ID du produit
-        setPage('produit');  // Change la page vers le composant Product
+      setSelectedProductId(productId);
+      setPage('produit');
     };
-
-
-    const closeProduct = () => {
-        setModalVisible(false);
-    };
+  
     return (
-        <View style={styles.container}>
-            <ThemedText type="subtitle" style={styles.sectionTitle}>{title}</ThemedText>
-
-            <ScrollView
-                horizontal={horizontal}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.scrollContent}
+      <View style={styles.container}>
+        <ThemedText type="subtitle" style={styles.sectionTitle}>{title}</ThemedText>
+        
+        <ScrollView
+          horizontal={horizontal}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
+        >
+          {products.map((product) => (
+            <TouchableOpacity 
+              key={product.id} 
+              style={styles.productCard}
+              onPress={() => openProduct(product.id)}
             >
-                {products.map((product) => (
-                    <Pressable
-                        key={product.id}
-                        style={styles.productCard}
-                        onPress={() => {openProduct(product.id)}}
-                    >
-                        <Image
-                            source={{ uri: product.photo[0] }}
-                            style={styles.productImage}
-                            resizeMode="cover"
-
-                        />
-                        <View style={styles.productInfo}>
-                            <ThemedText style={styles.productName} numberOfLines={1}>{product.name}</ThemedText>
-                            <ThemedText style={styles.productPrice}>{product.prix} €</ThemedText>
-                            {product.vendu && (
-                                <View style={styles.soldBadge}>
-                                    <ThemedText style={styles.soldText} >Vendu</ThemedText>
-                                </View>
-                            )}
-                        </View>
-                    </Pressable>
-                ))}
-            </ScrollView>
-
-            <Modal
-                animationType="slide"
-                transparent={false}
-                visible={modalVisible}
-                onRequestClose={closeProduct}
-            >
-            </Modal>
-        </View>
+              <Image
+                source={{ uri: product.photo[0] }}
+                style={styles.productImage}
+                resizeMode="cover"
+              />
+              {product.vendu && (
+                <View style={styles.soldBadge}>
+                  <ThemedText style={styles.soldText}>Vendu</ThemedText>
+                </View>
+              )}
+              <View style={styles.productInfo}>
+                <ThemedText style={styles.productName} numberOfLines={1}>{product.name}</ThemedText>
+                
+                {/* Nouveau: État du produit */}
+                <ThemedText style={styles.productState} numberOfLines={1}>{product.etat}</ThemedText>
+                
+                {/* Nouveau: Nom du vendeur */}
+                <ThemedText style={styles.productSeller} numberOfLines={1}>
+                  {getSellerName(product.marchand)}
+                </ThemedText>
+                
+                {/* Prix en rouge */}
+                <ThemedText style={styles.productPrice}>{product.prix} €</ThemedText>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
     );
-}
+  }
