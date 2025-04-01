@@ -20,17 +20,18 @@ type ListProductProps = {
     horizontal?: boolean;
     title?: string;
     setPage: (page: string) => void;
+    setSelectedProductId: (productId: number) => void;
 };
 
-export function ListProduct({ horizontal = true, title = "Produits populaires", setPage }: ListProductProps) {
+export function ListProduct({ horizontal = true, title = "Produits populaires", setPage, setSelectedProductId }: ListProductProps) {
     const products = data.produits || [];
-    const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
     const [modalVisible, setModalVisible] = useState(false)
 
     const openProduct = (productId: number) => {
-        setSelectedProductId(productId);
-        setModalVisible(true);
+        setSelectedProductId(productId);  // Met à jour l'ID du produit
+        setPage('produit');  // Change la page vers le composant Product
     };
+
 
     const closeProduct = () => {
         setModalVisible(false);
@@ -69,32 +70,12 @@ export function ListProduct({ horizontal = true, title = "Produits populaires", 
                 ))}
             </ScrollView>
 
-            {/* Modal pour afficher le détail du produit */}
             <Modal
                 animationType="slide"
                 transparent={false}
                 visible={modalVisible}
                 onRequestClose={closeProduct}
             >
-                {selectedProductId !== null && (
-                    <View style={{ flex: 1 }}>
-                        <Pressable
-                            style={{
-                                position: 'absolute',
-                                top: 40,
-                                right: 20,
-                                zIndex: 1000,
-                                padding: 10,
-                                backgroundColor: 'rgba(0,0,0,0.2)',
-                                borderRadius: 20
-                            }}
-                            onPress={closeProduct}
-                        >
-                            <ThemedText style={{ fontSize: 16, fontWeight: 'bold' }}>Fermer</ThemedText>
-                        </Pressable>
-                        <Product productId={selectedProductId}  setPage={setPage}/>
-                    </View>
-                )}
             </Modal>
         </View>
     );
