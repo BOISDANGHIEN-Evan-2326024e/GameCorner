@@ -26,7 +26,6 @@ export default function Product() {
     const vendProduit = () => {
         setIsSold(true); // Marquer le produit comme vendu
     };
-
     return (
         <ParallaxScrollView
             headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
