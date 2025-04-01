@@ -1,140 +1,121 @@
 import { Tabs } from 'expo-router';
 import React, { useState } from 'react';
-import { Platform, ScrollView, View, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
-import { Ionicons, Feather } from '@expo/vector-icons';
+import { 
+  Platform, 
+  ScrollView, 
+  View, 
+  TextInput, 
+  TouchableOpacity, 
+  Image, 
+  ImageBackground,
+  Dimensions
+} from 'react-native';
+import { Ionicons, Feather, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import { ListProduct } from '@/components/listProduct/ListProduct';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import Header from '@/components/Header/Header';
 import styles from '../../assets/styles/accueil.styles';
-
-interface Acceuil {
-  setPage?: (page: string) => void;
-}
+type Acceuil = {
+  setPage: (page: string) => void;
+};
 
 export default function Accueil({ setPage }: Acceuil) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState('Tous');
-
-  const filterOptions = ['Tous', 'Nintendo', 'PlayStation', 'Xbox', 'PC'];
-
+  const windowWidth = Dimensions.get('window').width;
+  
   return (
     <ThemedView style={styles.container}>
-      <View style={styles.header}>
-        <ThemedText style={{ color: '#FFFFFF', fontSize: 18, fontWeight: 'bold' }}>
-          GameCorner
-        </ThemedText>
-        <TouchableOpacity onPress={() => setPage && setPage("user")}>
-          <Ionicons name="person-circle-outline" size={28} color="#FFFFFF" />
-        </TouchableOpacity>
-
-      </View>
+      {/* En-tête avec logo et icône de profil */}
+      <Header setPage={setPage} />
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ThemedText type="title" style={styles.pageTitle}>
-          Bienvenue sur Game Corner
-        </ThemedText>
-        
-        <ThemedText style={styles.subTitle}>
-          Trouvez des jeux vidéo d'occasion à petits prix
-        </ThemedText>
-
-        {/* Search bar */}
-        <View style={styles.searchContainer}>
-          <Feather name="search" size={20} color="#777777" style={styles.searchIcon} />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Rechercher un jeu..."
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            placeholderTextColor="#999999"
-          />
-        </View>
-
-        {/* Filter chips */}
-        <View style={styles.filterContainer}>
-          {filterOptions.map((filter) => (
+        {/* Bannière principale avec CTA */}
+        <ImageBackground
+          source={{ uri: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f' }}
+          style={styles.banner}
+          imageStyle={{ opacity: 0.7 }}
+        >
+          <View style={styles.bannerOverlay}>
+            <ThemedText style={styles.bannerTitle}>
+              Achète et vends tes jeux
+            </ThemedText>
             <TouchableOpacity 
-              key={filter}
-              style={[
-                styles.filterChip,
-                activeFilter === filter ? styles.filterChipActive : null
-              ]}
-              onPress={() => setActiveFilter(filter)}
+              style={styles.bannerButton}
+              onPress={() => setPage && setPage("recherche")}
             >
-              <ThemedText style={[
-                styles.filterChipText,
-                activeFilter === filter ? styles.filterChipTextActive : null
-              ]}>
-                {filter}
-              </ThemedText>
+              <ThemedText style={styles.bannerButtonText}>Découvrir</ThemedText>
             </TouchableOpacity>
-          ))}
-        </View>
+          </View>
+        </ImageBackground>
 
-        {/* Separator */}
-        <View style={styles.separator} />
-        
-        {/* Featured products with section header */}
-        <ThemedText style={styles.sectionHeader}>Produits en vedette</ThemedText>
-        <ListProduct 
-          horizontal={true} 
-          title="" 
-        />
-        
-        {/* New arrivals */}
-        <ThemedText style={styles.sectionHeader}>Nouveaux arrivages</ThemedText>
-
-        <ListProduct 
-          horizontal={true} 
-          title="" 
-        />
-        
-        {/* Special offers */}
-        <ThemedText style={styles.sectionHeader}>Offres spéciales</ThemedText>
-        <ListProduct
-          horizontal={true} 
-          title="" 
-        />
-
-        {/* Grid display example */}
-        <ThemedText style={styles.sectionHeader}>Parcourir par catégorie</ThemedText>
-        <View style={styles.gridContainer}>
-          {/* This is just a placeholder - you would normally map through your data */}
-          <TouchableOpacity style={styles.gridItem}>
-            <View style={styles.gridImageContainer}>
-              <Image
-                source={{ uri: 'https://m.media-amazon.com/images/I/81KGsbq8ekL._AC_SL1500_.jpg' }}
-                style={styles.gridImage}
-              />
+        {/* Barre de raccourcis */}
+        <View style={styles.shortcutsContainer}>
+          <TouchableOpacity style={styles.shortcutItem} onPress={() => setPage && setPage("recherche")}>
+            <View style={styles.shortcutIconContainer}>
+              <Feather name="search" size={24} color="#6A42F4" />
             </View>
-            <View style={styles.gridInfo}>
-              <ThemedText style={styles.gridTitle}>Nintendo Switch</ThemedText>
-              <ThemedText style={styles.gridPrice}>12 jeux</ThemedText>
+            <ThemedText style={styles.shortcutText}>Rechercher</ThemedText>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.shortcutItem} onPress={() => setPage && setPage("user")}>
+            <View style={styles.shortcutIconContainer}>
+              <MaterialCommunityIcons name="controller-classic" size={24} color="#6A42F4" />
             </View>
+            <ThemedText style={styles.shortcutText}>Vendre</ThemedText>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.shortcutItem} onPress={() => {}}>
+            <View style={styles.shortcutIconContainer}>
+              <FontAwesome5 name="bookmark" size={24} color="#6A42F4" />
+            </View>
+            <ThemedText style={styles.shortcutText}>Favoris</ThemedText>
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.gridItem}>
-            <View style={styles.gridImageContainer}>
-              <Image
-                source={{ uri: 'https://m.media-amazon.com/images/I/61OQP3X038L._AC_SL1500_.jpg' }}
-                style={styles.gridImage}
-              />
+          <TouchableOpacity style={styles.shortcutItem} onPress={() => setPage && setPage("user")}>
+            <View style={styles.shortcutIconContainer}>
+              <Ionicons name="notifications-outline" size={24} color="#6A42F4" />
             </View>
-            <View style={styles.gridInfo}>
-              <ThemedText style={styles.gridTitle}>PlayStation 5</ThemedText>
-              <ThemedText style={styles.gridPrice}>18 jeux</ThemedText>
-            </View>
+            <ThemedText style={styles.shortcutText}>Alertes</ThemedText>
           </TouchableOpacity>
         </View>
-
-        {/* Call-to-action button */}
-        <View style={{ alignItems: 'center', marginVertical: 30 }}>
-          <TouchableOpacity style={styles.primaryButton} onPress={() => setPage && setPage('explore')}>
-            <ThemedText style={styles.buttonText}>Voir tous les jeux</ThemedText>
-          </TouchableOpacity>
+        {/* Produits en vedette */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <ThemedText style={styles.sectionTitle}>En ce moment</ThemedText>
+            <TouchableOpacity onPress={() => setPage && setPage("recherche")}>
+              <ThemedText style={styles.seeAllText}>Voir tout</ThemedText>
+            </TouchableOpacity>
+          </View>
+          <ListProduct horizontal={true} title="" />
         </View>
+        
+        {/* Produits récemment ajoutés */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <ThemedText style={styles.sectionTitle}>Nouveautés</ThemedText>
+            <TouchableOpacity onPress={() => setPage && setPage("recherche")}>
+              <ThemedText style={styles.seeAllText}>Voir tout</ThemedText>
+            </TouchableOpacity>
+          </View>
+          <ListProduct horizontal={true} title="" />
+        </View>
+        
+        {/* Bannière promo */}
+        <TouchableOpacity style={styles.promoBanner}>
+          <Image 
+            source={{ uri: 'https://images.unsplash.com/photo-1511512578047-dfb367046420' }} 
+            style={styles.promoImage}
+          />
+          <View style={styles.promoOverlay}>
+            <ThemedText style={styles.promoTitle}>Offre de lancement</ThemedText>
+            <ThemedText style={styles.promoDescription}>Pas de commission sur ta première vente !</ThemedText>
+            <View style={styles.promoButton}>
+              <ThemedText style={styles.promoButtonText}>En savoir plus</ThemedText>
+            </View>
+          </View>
+        </TouchableOpacity>
 
-        {/* Footer */}
+        {/* Pied de page */}
         <View style={styles.footer}>
           <ThemedText style={styles.footerText}>© 2025 GameCorner - Tous droits réservés</ThemedText>
         </View>

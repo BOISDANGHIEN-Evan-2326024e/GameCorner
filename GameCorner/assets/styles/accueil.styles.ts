@@ -18,7 +18,7 @@ export default StyleSheet.create({
   // Main container
   container: {
     flex: 1,
-    paddingTop: Platform.OS === 'ios' ? 50 : 20,
+    paddingTop: 0,
     backgroundColor: colors.background,
   },
   
@@ -350,5 +350,271 @@ export default StyleSheet.create({
     fontSize: 14,
     color: colors.textLight,
     textAlign: 'center',
+  },
+  // Ajouter ces styles à la fin du StyleSheet.create({...})
+
+  // Bannière principale
+  banner: {
+    height: 200,
+    marginHorizontal: 16,
+    marginBottom: 24,
+    borderRadius: 16,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bannerContent: {
+    padding: 20,
+    alignItems: 'center',
+  },
+  bannerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    textAlign: 'center',
+    marginBottom: 12,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
+  },
+  bannerSubtitle: {
+    fontSize: 16,
+    color: '#FFFFFF',
+    textAlign: 'center',
+    marginBottom: 16,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+  },
+  
+  // Raccourcis et catégories
+  shortcutsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginHorizontal: 16,
+    marginBottom: 24,
+  },
+  shortcutItem: {
+    alignItems: 'center',
+    width: 80,
+  },
+  shortcutIconCircle: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 8,
+    shadowColor: colors.shadow,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  shortcutLabel: {
+    fontSize: 12,
+    textAlign: 'center',
+    color: colors.text,
+  },
+  
+  // Section (pour les sections génériques)
+  section: {
+    marginHorizontal: 16,
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    color: colors.text,
+  },
+  
+  // Style pour les nouveaux éléments de type marketplace
+  categoryRow: {
+    flexDirection: 'row',
+    marginBottom: 24,
+    paddingHorizontal: 16,
+  },
+  categoryBadge: {
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 16,
+    backgroundColor: colors.secondary,
+    alignSelf: 'flex-start',
+    marginBottom: 8,
+  },
+  categoryBadgeText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  promotedItem: {
+    backgroundColor: colors.card,
+    borderRadius: 16,
+    overflow: 'hidden',
+    shadowColor: colors.shadow,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 5,
+    elevation: 5,
+    marginHorizontal: 16,
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  promotedItemImage: {
+    width: '100%',
+    height: 200,
+    resizeMode: 'cover',
+  },
+  promotedItemContent: {
+    padding: 16,
+  },
+  promotedItemTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: colors.text,
+    marginBottom: 8,
+  },
+  promotedItemPrice: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: colors.accent,
+    marginBottom: 8,
+  },
+  actionButtonsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+    paddingTop: 16,
+  },
+  actionButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+  actionButtonText: {
+    marginLeft: 6,
+    fontSize: 14,
+    color: colors.primary,
+  },
+  bannerOverlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    padding: 20,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bannerButton: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 25,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    elevation: 5,
+  },
+  bannerButtonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  shortcutIconContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#F0F0F0',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 8,
+    shadowColor: colors.shadow,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  shortcutText: {
+    fontSize: 12,
+    textAlign: 'center',
+  },
+  seeAllText: {
+    color: colors.primary,
+    fontWeight: '600',
+  },
+
+  // Categories
+  categoriesContainer: {
+    paddingLeft: 16,
+    marginBottom: 10,
+  },
+  categoryItem: {
+    marginRight: 16,
+    alignItems: 'center',
+    width: 90,
+  },
+  categoryImage: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    marginBottom: 8,
+    borderWidth: 2,
+    borderColor: colors.primary,
+  },
+  categoryName: {
+    fontSize: 14,
+    textAlign: 'center',
+  },
+
+  // Promo banner
+  promoBanner: {
+    height: 150,
+    marginHorizontal: 16,
+    marginBottom: 30,
+    borderRadius: 16,
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  promoImage: {
+    width: '100%',
+    height: 150,
+    position: 'absolute',
+  },
+  promoOverlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+  },
+  promoTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  promoDescription: {
+    fontSize: 16,
+    color: '#FFFFFF',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  promoButton: {
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  promoButtonText: {
+    color: colors.primary,
+    fontWeight: 'bold',
   },
 });
