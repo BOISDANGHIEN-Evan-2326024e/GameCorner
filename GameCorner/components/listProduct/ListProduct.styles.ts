@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
   productPrice: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#2E7D32', // Vert pour le prix
+    color: 'red', // Vert pour le prix
   },
   soldBadge: {
     position: 'absolute',
@@ -58,5 +58,16 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontSize: 12,
     fontWeight: 'bold',
+  },
+  productState: {
+    fontSize: 12,
+    color: '#555555',
+    marginBottom: 2,
+  },
+  productSeller: {
+    fontSize: 12,
+    fontStyle: 'italic',
+    color: '#777777',
+    marginBottom: 4,
   },
 });
