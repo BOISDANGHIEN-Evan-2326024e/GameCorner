@@ -16,6 +16,7 @@ export default function Router({ IdUser }: { IdUser: number }) {
     const [favoris, setFavoris] = useState(data.favoris);
     const User = user.find((u: { id: number }) => u.id === IdUser) || null;
     const [page, setPage] = useState('recherche');
+    const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
     return (
         <View style={styles.container}>
@@ -25,7 +26,7 @@ export default function Router({ IdUser }: { IdUser: number }) {
                     <ProfilScreen setPage={setPage} UserData={User} />}
                 {page === 'accueil' && <Accueil setPage={setPage} />}
                 {page === 'test' && <Test setPage={setPage} />}
-                {page === 'produit' && <Product setPage={setPage}/>}
+                {page === 'produit' && <Product productId={selectedProductId || 0} setPage={setPage}/>}
             </View>
 
             <CustomBottomBar page={page} setPage={setPage} />

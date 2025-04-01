@@ -13,7 +13,7 @@ import {User} from "@/Class/User";
 
 
 
-export default function Product({ productId, setPage }: { setPage: (page: string) => void, productId: Number }) {
+export default function Product({ productId, setPage }: { productId: number, setPage: (page: string) => void }) {
 
     const product = data.produits.find(p => p.id === productId);
     const marchandUser = data.users.find(user => user.id === product?.marchand);
