@@ -97,6 +97,7 @@ export default function Product({ productId, setPage, produits, setProduits, cat
 
         setModalVisible(false);
 
+
         setPage('accueil');
     };
 
