@@ -13,7 +13,7 @@ export default function Header({ setPage }: { setPage: (page: string) => void })
         GameCorner
         </ThemedText>
         <TouchableOpacity onPress={() => setPage("user")}>
-        <Ionicons name="person-circle-outline" size={28} color="#FFFFFF" />
+            <Ionicons name="person-circle-outline" size={28} color="#FFFFFF" />
         </TouchableOpacity>
     </View>
     );
