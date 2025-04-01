@@ -146,5 +146,102 @@
       "marchand": 3,
       "vendu": false
     }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Action"
+    },
+    {
+      "id": 2,
+      "name": "Aventure"
+    },
+    {
+      "id": 3,
+      "name": "RPG"
+    },
+    {
+      "id": 4,
+      "name": "Course"
+    },
+    {
+      "id": 5,
+      "name": "Sport"
+    },
+    {
+      "id": 6,
+      "name": "FPS"
+    },
+    {
+      "id": 7,
+      "name": "Simulation"
+    },
+    {
+      "id": 8,
+      "name": "Stratégie"
+    },
+    {
+      "id": 9,
+      "name": "Horreur"
+    },
+    {
+      "id": 10,
+      "name": "Puzzle"
+    },
+    {
+      "id": 11,
+      "name": "Multijoueur"
+    },
+    {
+      "id": 12,
+      "name": "Indépendant"
+    },
+    {
+      "id": 13,
+      "name": "Xbox"
+    },
+    {
+      "id": 14,
+      "name": "PlayStation"
+    },
+    {
+      "id": 15,
+      "name": "Nintendo"
+    }
+  ],
+  "relations": [
+    { "produit_id": 101, "categorie_id": 2 },
+    { "produit_id": 101, "categorie_id": 15 },
+    { "produit_id": 102, "categorie_id": 3 },
+    { "produit_id": 102, "categorie_id": 14 },
+    { "produit_id": 103, "categorie_id": 1 },
+    { "produit_id": 103, "categorie_id": 14 },
+    { "produit_id": 116, "categorie_id": 1 },
+    { "produit_id": 116, "categorie_id": 14 },
+    { "produit_id": 117, "categorie_id": 1 },
+    { "produit_id": 117, "categorie_id": 14 },
+    { "produit_id": 118, "categorie_id": 5 },
+    { "produit_id": 118, "categorie_id": 14 },
+    { "produit_id": 119, "categorie_id": 2 },
+    { "produit_id": 119, "categorie_id": 15 },
+    { "produit_id": 120, "categorie_id": 6 },
+    { "produit_id": 120, "categorie_id": 13 },
+    { "produit_id": 121, "categorie_id": 4 },
+    { "produit_id": 121, "categorie_id": 15 },
+    { "produit_id": 122, "categorie_id": 1 },
+    { "produit_id": 122, "categorie_id": 14 },
+    { "produit_id": 122, "categorie_id": 9 }
+  ],
+  "favoris": [
+    { "user_id": 1, "produit_id": 101 },
+    { "user_id": 1, "produit_id": 102 },
+    { "user_id": 2, "produit_id": 103 },
+    { "user_id": 2, "produit_id": 116 },
+    { "user_id": 4, "produit_id": 117 },
+    { "user_id": 1, "produit_id": 118 },
+    { "user_id": 2, "produit_id": 119 },
+    { "user_id": 4, "produit_id": 120 },
+    { "user_id": 1, "produit_id": 121 },
+    { "user_id": 2, "produit_id": 122 }
   ]
 }
