@@ -2,7 +2,7 @@ import { StyleSheet, Platform, Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 const colors = {
-  primary: '#6A42F4',
+  primary: '#8257fe',
   secondary: '#FFA500',
   background: '#F9F9F9',
   card: '#FFFFFF',

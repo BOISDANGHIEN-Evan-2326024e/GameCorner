@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, View, Button, Image, FlatList, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { Modal, View, Button, Image, FlatList, Text, ScrollView, TouchableOpacity, Dimensions, useWindowDimensions } from 'react-native';
 import { Collapsible } from '@/components/Collapsible';
 import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { StyleSheet } from "react-native";
+import { styles } from './Product.styles';
 
 interface RechercheProps {
     productId: number;
@@ -18,27 +18,29 @@ interface RechercheProps {
 }
 
 export default function Product({ productId, setPage, produits, setProduits, categories, users }: RechercheProps) {
-    console.log("ProductId", productId);
-    console.log("Produits", produits);
     const product = produits.find((prod: { id: number; }) => prod.id === productId);
     const marchandUser = users.find((user: { id: number; }) => user.id === product?.marchand);
+    const { width: windowWidth, height: windowHeight } = useWindowDimensions();
+    const isLargeScreen = windowWidth > 600;
 
-    console.log(product);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isSold, setIsSold] = useState(product?.vendu || false);
+    const [isModalVisible, setModalVisible] = useState(false);
+    const [otherProducts, setOtherProducts] = useState(
+        produits.filter(p => p.marchand === product?.marchand && p.id !== product?.id)
+    );
+    const [cart, setCart] = useState<any[]>([]); // Liste des produits dans le panier
 
     if (!product) {
         return (
-            <ThemedView>
-                <ThemedText>Produit non trouvé</ThemedText>
+            <ThemedView style={styles.errorContainer}>
+                <ThemedText style={styles.errorText}>Produit non trouvé</ThemedText>
+                <TouchableOpacity style={styles.goBackButton} onPress={() => setPage('accueil')}>
+                    <ThemedText style={styles.goBackButtonText}>Retourner à l'accueil</ThemedText>
+                </TouchableOpacity>
             </ThemedView>
         );
     }
-
-    const [isSold, setIsSold] = useState(product.vendu);
-    const [isModalVisible, setModalVisible] = useState(false);
-    const [otherProducts, setOtherProducts] = useState(
-        produits.filter(p => p.marchand === product.marchand && p.id !== product.id)
-    );
-    const [cart, setCart] = useState<any[]>([]); // Liste des produits dans le panier
 
     const openBuyModal = () => {
         setCart((prevCart) => {
@@ -83,11 +85,9 @@ export default function Product({ productId, setPage, produits, setProduits, cat
 
         setProduits(updatedProduits);
 
-
         if (purchasedProductIds.includes(productId)) {
             setIsSold(true);
         }
-
 
         setOtherProducts(prevOtherProducts =>
             prevOtherProducts.map(prod => {
@@ -101,19 +101,16 @@ export default function Product({ productId, setPage, produits, setProduits, cat
         alert(`Achat réussi ! ${cart.length} produit(s) acheté(s).`);
 
         setCart([]);
-
         setModalVisible(false);
-
-
         setPage('accueil');
     };
 
     const getDiscount = () => {
         const numItems = cart.length;
         if (numItems === 2) {
-            return { discount: 10, color: 'green' };
+            return { discount: 10, color: 'rgba(40, 167, 69, 1)' };
         } else if (numItems >= 3) {
-            return { discount: 20, color: 'blue' };
+            return { discount: 20, color: 'rgba(130, 87, 254, 1.00)' };
         }
         return { discount: 0, color: 'black' };
     };
@@ -133,52 +130,101 @@ export default function Product({ productId, setPage, produits, setProduits, cat
 
     const { subtotal, discountAmount, total } = calculateTotal();
 
+    const navigateToImage = (index: number) => {
+        setCurrentImageIndex(index);
+    };
+
     return (
-        <ParallaxScrollView
-            headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-            headerImage={
-                <ScrollView horizontal>
-                    {product.photo.map((imageUrl: any, index: React.Key | null | undefined) => (
-                        <Image
+        <ThemedView style={styles.container}>
+            {/* Image Gallery with Pagination - Responsive */}
+            <View style={[styles.imageContainer, { height: windowHeight * 0.4 }]}>
+                <Image
+                    source={{ uri: product.photo[currentImageIndex] }}
+                    style={[styles.mainImage, {
+                        width: windowWidth * (isLargeScreen ? 0.7 : 0.85),
+                        height: windowWidth * (isLargeScreen ? 0.7 : 0.85) * 0.75
+                    }]}
+                    resizeMode="cover"
+                />
+
+                <View style={styles.pagination}>
+                    {product.photo.map((_: any, index: number) => (
+                        <TouchableOpacity
                             key={index}
-                            source={{ uri: imageUrl }}
-                            style={{ width: 400, height: 400, marginRight: 10 }}
+                            style={[
+                                styles.paginationDot,
+                                currentImageIndex === index && styles.paginationDotActive
+                            ]}
+                            onPress={() => navigateToImage(index)}
                         />
                     ))}
+                </View>
+
+                <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    style={styles.thumbnailScroll}
+                    contentContainerStyle={styles.thumbnailContainer}
+                >
+                    {product.photo.map((imageUrl: string, index: number) => (
+                        <TouchableOpacity
+                            key={index}
+                            onPress={() => navigateToImage(index)}
+                            style={[
+                                styles.thumbnailTouch,
+                                currentImageIndex === index && styles.thumbnailActive
+                            ]}
+                        >
+                            <Image
+                                source={{ uri: imageUrl }}
+                                style={styles.thumbnail}
+                            />
+                        </TouchableOpacity>
+                    ))}
                 </ScrollView>
-            }>
-            <ThemedView style={styles.header}>
-                <ThemedText type="title">{product.name}</ThemedText>
-                <ThemedText type="title">{product.prix} €</ThemedText>
-            </ThemedView>
+            </View>
 
-            <Collapsible title="Description">
-                <ThemedText>{product.desc}</ThemedText>
-            </Collapsible>
+            <ScrollView style={styles.contentScroll}>
+                <ThemedView style={styles.header}>
+                    <ThemedText style={styles.productTitle}>{product.name}</ThemedText>
+                    <ThemedText style={styles.productPrice}>{product.prix} €</ThemedText>
+                </ThemedView>
 
-            <Collapsible title="État">
-                <ThemedText>{product.etat}</ThemedText>
-            </Collapsible>
+                {/* Informations produit en "bulles" */}
+                <ThemedView style={styles.infoContainer}>
+                    <ThemedView style={styles.infoBubble}>
+                        <ThemedText style={styles.infoBubbleText}>État: {product.etat}</ThemedText>
+                    </ThemedView>
 
-            <Collapsible title="Marque">
-                <ThemedText>Nintendo (pour The Legend of Zelda)</ThemedText>
-            </Collapsible>
+                    <ThemedView style={styles.infoBubble}>
+                        <ThemedText style={styles.infoBubbleText}>Marque: Nintendo</ThemedText>
+                    </ThemedView>
 
-            <Collapsible title="Nombres de membres intéressés">
-                <ThemedText>5 membres sont intéressés par votre article</ThemedText>
-            </Collapsible>
+                    <ThemedView style={styles.infoBubble}>
+                        <ThemedText style={styles.infoBubbleText}>5 membres intéressés</ThemedText>
+                    </ThemedView>
+                </ThemedView>
 
-            <ThemedText>
-                Vendu par : {marchandUser ? `${marchandUser.prenom} ${marchandUser.nom}` : "Utilisateur non trouvé"}
-            </ThemedText>
+                <ThemedView style={styles.vendorInfo}>
+                    <ThemedText style={styles.vendorText}>
+                        Vendu par : {marchandUser ? `${marchandUser.prenom} ${marchandUser.nom}` : "Utilisateur non trouvé"}
+                    </ThemedText>
+                </ThemedView>
 
-            <Button
-                title={isSold ? "Vendu" : "Acheter"}
-                disabled={isSold}
-                onPress={openBuyModal}
-            />
+                <Collapsible title="Description" style={styles.collapsible}>
+                    <ThemedText style={styles.collapsibleContent}>{product.desc}</ThemedText>
+                </Collapsible>
 
-            {/* Modal Acheter avec panier et réductions */}
+                <TouchableOpacity
+                    style={[styles.buyButton, isSold && styles.soldButton]}
+                    disabled={isSold}
+                    onPress={openBuyModal}
+                >
+                    <Text style={styles.buyButtonText}>{isSold ? "Vendu" : "Acheter"}</Text>
+                </TouchableOpacity>
+            </ScrollView>
+
+            {/* Modal Acheter avec panier et réductions - Responsive */}
             <Modal
                 visible={isModalVisible}
                 animationType="slide"
@@ -191,9 +237,14 @@ export default function Product({ productId, setPage, produits, setProduits, cat
                         <Text style={styles.modalText}>Vendeur: {marchandUser ? `${marchandUser.prenom} ${marchandUser.nom}` : "Utilisateur non trouvé"}</Text>
                         <Text style={styles.modalText}>Contact: {marchandUser ? marchandUser.email : "Non disponible"}</Text>
 
-                        <View style={styles.contentContainer}>
-                            {/* Liste des produits du vendeur (partie gauche) */}
-                            <View style={styles.productsListContainer}>
+                        <View style={[styles.contentContainer, { flexDirection: isLargeScreen ? 'row' : 'column' }]}>
+                            {/* Liste des produits du vendeur */}
+                            <View style={[styles.productsListContainer, {
+                                borderRightWidth: isLargeScreen ? 1 : 0,
+                                borderBottomWidth: isLargeScreen ? 0 : 1,
+                                paddingRight: isLargeScreen ? 15 : 0,
+                                paddingBottom: isLargeScreen ? 0 : 15,
+                            }]}>
                                 <Text style={styles.modalTitle}>Autres jeux du vendeur</Text>
                                 <FlatList
                                     data={[product, ...otherProducts]}
@@ -207,7 +258,7 @@ export default function Product({ productId, setPage, produits, setProduits, cat
                                             <View style={styles.productDetails}>
                                                 <Text style={styles.productName}>{item.name}</Text>
                                                 <Text style={styles.productPrice}>{item.prix} €</Text>
-                                                <Text style={styles.productDescription}>{item.desc}</Text>
+                                                <Text numberOfLines={2} style={styles.productDescription}>{item.desc}</Text>
                                                 <TouchableOpacity
                                                     style={[
                                                         styles.addButton,
@@ -217,7 +268,7 @@ export default function Product({ productId, setPage, produits, setProduits, cat
                                                     disabled={item.vendu || cart.some(p => p.id === item.id)}
                                                 >
                                                     <Text style={styles.addButtonText}>
-                                                        {item.vendu ? "Produit vendu" : cart.some(p => p.id === item.id) ? "Objet déjà dans le panier" : "Ajouter au panier"}
+                                                        {item.vendu ? "Produit vendu" : cart.some(p => p.id === item.id) ? "Déjà dans le panier" : "Ajouter au panier"}
                                                     </Text>
                                                 </TouchableOpacity>
                                             </View>
@@ -226,8 +277,11 @@ export default function Product({ productId, setPage, produits, setProduits, cat
                                 />
                             </View>
 
-                            {/* Panier (partie droite) */}
-                            <View style={styles.cartContainer}>
+                            {/* Panier */}
+                            <View style={[styles.cartContainer, {
+                                paddingLeft: isLargeScreen ? 15 : 0,
+                                paddingTop: isLargeScreen ? 0 : 15,
+                            }]}>
                                 <Text style={styles.cartTitle}>Votre panier</Text>
 
                                 {cart.length === 0 ? (
@@ -290,191 +344,6 @@ export default function Product({ productId, setPage, produits, setProduits, cat
                     </View>
                 </View>
             </Modal>
-        </ParallaxScrollView>
+        </ThemedView>
     );
 }
-
-const styles = StyleSheet.create({
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-    },
-    header: {
-        padding: 20,
-        backgroundColor: '#fff',
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-    },
-    modalContent: {
-        backgroundColor: '#fff',
-        padding: 20,
-        borderRadius: 10,
-        width: '90%',
-        maxWidth: 800,
-        maxHeight: '90%',
-    },
-    modalTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 10,
-    },
-    modalText: {
-        fontSize: 16,
-        marginVertical: 5,
-    },
-    contentContainer: {
-        flexDirection: 'row',
-        marginTop: 20,
-    },
-    productsListContainer: {
-        flex: 3,
-        marginRight: 10,
-        maxHeight: 500,
-    },
-    cartContainer: {
-        flex: 2,
-        backgroundColor: '#f9f9f9',
-        padding: 15,
-        borderRadius: 8,
-        maxHeight: 500,
-    },
-    cartTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 15,
-    },
-    emptyCartText: {
-        fontStyle: 'italic',
-        color: '#888',
-        textAlign: 'center',
-        marginTop: 20,
-    },
-    productItem: {
-        flexDirection: 'row',
-        marginVertical: 10,
-        padding: 10,
-        backgroundColor: '#f1f1f1',
-        borderRadius: 8,
-    },
-    productImage: {
-        width: 80,
-        height: 80,
-        borderRadius: 4,
-    },
-    productDetails: {
-        flex: 1,
-        marginLeft: 10,
-    },
-    productName: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    productPrice: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: '#2a86db',
-        marginTop: 4,
-    },
-    productDescription: {
-        fontSize: 14,
-        color: '#555',
-        marginTop: 4,
-    },
-    addButton: {
-        backgroundColor: '#2a86db',
-        padding: 8,
-        borderRadius: 4,
-        alignItems: 'center',
-        marginTop: 8,
-        alignSelf: 'flex-start',
-    },
-    disabledButton: {
-        backgroundColor: '#cccccc',
-    },
-    addButtonText: {
-        color: '#fff',
-        fontWeight: 'bold',
-    },
-    cartItem: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-    },
-    cartItemName: {
-        flex: 2,
-        fontSize: 14,
-    },
-    cartItemPrice: {
-        flex: 1,
-        fontSize: 14,
-        textAlign: 'right',
-    },
-    removeButton: {
-        backgroundColor: '#ff4d4d',
-        padding: 6,
-        borderRadius: 4,
-        marginLeft: 10,
-    },
-    removeButtonText: {
-        color: '#fff',
-        fontSize: 12,
-    },
-    cartSummary: {
-        marginTop: 20,
-        borderTopWidth: 1,
-        borderTopColor: '#ddd',
-        paddingTop: 15,
-    },
-    subtotalText: {
-        fontSize: 16,
-        marginBottom: 8,
-    },
-    discountContainer: {
-        backgroundColor: '#f0f8ff',
-        padding: 10,
-        borderRadius: 4,
-        marginBottom: 8,
-    },
-    discountText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    discountInfoText: {
-        fontSize: 14,
-        marginTop: 4,
-    },
-    totalText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginVertical: 10,
-    },
-    checkoutButton: {
-        backgroundColor: '#4CAF50',
-        padding: 12,
-        borderRadius: 4,
-        alignItems: 'center',
-        marginTop: 10,
-    },
-    checkoutButtonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    closeButton: {
-        backgroundColor: '#ccc',
-        padding: 12,
-        borderRadius: 4,
-        alignItems: 'center',
-        marginTop: 20,
-    },
-    closeButtonText: {
-        color: '#333',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-});
