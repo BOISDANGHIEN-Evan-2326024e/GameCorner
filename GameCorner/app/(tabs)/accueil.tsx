@@ -19,9 +19,11 @@ import styles from '../../assets/styles/accueil.styles';
 type Acceuil = {
   setPage: (page: string) => void;
   setSelectedProductId: (productId: number) => void;
+  users: any[];
+  produits: any[];
 };
 
-export default function Accueil({ setPage, setSelectedProductId }: Acceuil) {
+export default function Accueil({ setPage, setSelectedProductId, users, produits}: Acceuil) {
   const windowWidth = Dimensions.get('window').width;
   
   return (
@@ -92,7 +94,10 @@ export default function Accueil({ setPage, setSelectedProductId }: Acceuil) {
               title="Produits populaires"
               setPage={setPage}
               setSelectedProductId={setSelectedProductId}
+              users={users}
+              products={produits}  // <-- Renomme "produits" en "products"
           />
+
 
         </View>
         
@@ -109,7 +114,10 @@ export default function Accueil({ setPage, setSelectedProductId }: Acceuil) {
               title="Produits populaires"
               setPage={setPage}
               setSelectedProductId={setSelectedProductId}
+              users={users}
+              products={produits}  // <-- Renomme "produits" en "products"
           />
+
 
         </View>
         

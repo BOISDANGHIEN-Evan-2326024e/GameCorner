@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Image, Pressable, Modal, TouchableOpacity, Text } from 'react-native';
-import data from '../../assets/json/data.json';
 import { styles } from './ListProduct.styles';
 import { ThemedText } from '@/components/ThemedText';
 import Product from "@/components/Product/Product";
@@ -22,7 +21,8 @@ type ListProductProps = {
     title?: string;
     setPage: (page: string) => void;
     setSelectedProductId: (productId: number) => void;
-    users?: any[]; // Ajouter les utilisateurs
+    users?: any[] | null; // Liste des utilisateurs
+    products: any[]; // Liste des produits
   };
   
   export function ListProduct({ 
@@ -30,13 +30,14 @@ type ListProductProps = {
     title = "Produits populaires", 
     setPage, 
     setSelectedProductId,
-    users = data.users // Utilisez data.users par défaut si non fourni
+    users,
+                                  products
   }: ListProductProps) {
-    const products = data.produits || [];
   
     // Fonction pour trouver le nom du vendeur
     const getSellerName = (marchandId: number) => {
-      const seller = users.find(user => user.id === marchandId);
+      // @ts-ignore
+        const seller = users.find(user => user.id === marchandId);
       return seller ? `${seller.prenom} ${seller.nom}` : "Vendeur inconnu";
     };
   

@@ -21,9 +21,9 @@ export default function Router({ IdUser }: { IdUser: number }) {
     return (
         <View style={styles.container}>
             <View style={styles.content}>
-                {page === 'recherche' && <Recherche setPage={setPage} produits={produits} relations={relations} />}
-                {page === 'user' && <ProfilScreen setPage={setPage} UserData={User} />}
-                {page === 'accueil' && <Accueil setPage={setPage} setSelectedProductId={setSelectedProductId} />}
+                {page === 'recherche' && <Recherche setPage={setPage} produits={produits} relations={relations} setSelectedProductId={setSelectedProductId} />}
+                {page === 'user' && <ProfilScreen setPage={setPage} UserData={User} produits={produits} />}
+                {page === 'accueil' && <Accueil setPage={setPage} setSelectedProductId={setSelectedProductId} users={users} produits={produits} />}
                 {page === 'test' && <Test setPage={setPage} />}
                 {page === 'produit' && <Product productId={selectedProductId || 0} setPage={setPage} produits={produits} categories={categories} users={users} setProduits={setProduits} />}
             </View>

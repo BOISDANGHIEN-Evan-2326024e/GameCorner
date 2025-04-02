@@ -41,6 +41,13 @@ export default function Product({ productId, setPage, produits, setProduits, cat
     const [cart, setCart] = useState<any[]>([]); // Liste des produits dans le panier
 
     const openBuyModal = () => {
+        setCart((prevCart) => {
+            // Vérifier si le produit est déjà dans le panier
+            if (!prevCart.some(p => p.id === product.id)) {
+                return [...prevCart, product];
+            }
+            return prevCart;
+        });
         setModalVisible(true);
     };
 
@@ -101,7 +108,6 @@ export default function Product({ productId, setPage, produits, setProduits, cat
         setPage('accueil');
     };
 
-    // Calcul de la réduction en fonction du nombre de jeux achetés
     const getDiscount = () => {
         const numItems = cart.length;
         if (numItems === 2) {
@@ -205,14 +211,13 @@ export default function Product({ productId, setPage, produits, setProduits, cat
                                                 <TouchableOpacity
                                                     style={[
                                                         styles.addButton,
-                                                        // Désactiver le bouton si le produit est déjà vendu
-                                                        item.vendu && styles.disabledButton
+                                                        (item.vendu || cart.some(p => p.id === item.id)) && styles.disabledButton
                                                     ]}
-                                                    onPress={() => !item.vendu && addToCart(item)}
-                                                    disabled={item.vendu}
+                                                    onPress={() => !item.vendu && !cart.some(p => p.id === item.id) && addToCart(item)}
+                                                    disabled={item.vendu || cart.some(p => p.id === item.id)}
                                                 >
                                                     <Text style={styles.addButtonText}>
-                                                        {item.vendu ? "Produit vendu" : "Ajouter au panier"}
+                                                        {item.vendu ? "Produit vendu" : cart.some(p => p.id === item.id) ? "Objet déjà dans le panier" : "Ajouter au panier"}
                                                     </Text>
                                                 </TouchableOpacity>
                                             </View>
