@@ -9,7 +9,7 @@ function CustomBottomBar({ page, setPage }: { setPage: (page: string) => void, p
         { name: 'accueil', label: 'Accueil', icon: 'home' },
         { name: 'recherche', label: 'Recherche', icon: 'search' },
         { name: 'user', label: 'Profil', icon: 'person' },
-        { name: 'test', label: 'Test', icon: 'game-controller' }
+        { name: 'test', label: 'Vendre', icon: 'game-controller' }
     ];
 
     return (

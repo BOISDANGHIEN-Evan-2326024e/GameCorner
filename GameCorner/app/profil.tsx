@@ -15,9 +15,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { User } from '@/Class/User';
-import data from '../assets/json/data.json';
 
-export default function ProfilScreen({ setPage, UserData }: { setPage: (page: string) => void, UserData: any }) {
+export default function ProfilScreen({ setPage, UserData, produits }: { setPage: (page: string) => void, UserData: any, produits : any }) {
   // État pour le mode édition
   const [isEditing, setIsEditing] = useState(false);
   
@@ -28,8 +27,8 @@ export default function ProfilScreen({ setPage, UserData }: { setPage: (page: st
   const [image, setImage] = useState(UserData?.image_profil || '');
   
   // Récupération des produits de l'utilisateur
-  const userProducts = data.produits.filter(
-    (product) => product.marchand === UserData?.id
+  const userProducts = produits.filter(
+    (product: { marchand: any; }) => product.marchand === UserData?.id
   );
   
   // Fonction pour sauvegarder les modifications
@@ -116,7 +115,7 @@ export default function ProfilScreen({ setPage, UserData }: { setPage: (page: st
               <ThemedText style={styles.userName}>{UserData?.prenom} {UserData?.nom}</ThemedText>
               <ThemedText style={styles.userEmail}>{UserData?.email}</ThemedText>
               <ThemedText style={styles.userStat}>Articles mis en vente: {userProducts.length}</ThemedText>
-              <ThemedText style={styles.userStat}>Articles vendus: {userProducts.filter(p => p.vendu).length}</ThemedText>
+              <ThemedText style={styles.userStat}>Articles vendus: {userProducts.filter((p: { vendu: any; }) => p.vendu).length}</ThemedText>
             </View>
           )}
         </View>

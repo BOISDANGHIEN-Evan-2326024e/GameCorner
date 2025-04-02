@@ -21,7 +21,6 @@ export default function Recherche({ setPage, produits, relations, setSelectedPro
     const [consoleFilter, setConsoleFilter] = useState<number | null>(null);
     const [categoryFilter, setCategoryFilter] = useState<number | null>(null);
 
-    // Définition des catégories
     const consoleCategories = {
         Xbox: 13,
         PlayStation: 14,
@@ -43,9 +42,9 @@ export default function Recherche({ setPage, produits, relations, setSelectedPro
 
     const openProduct = (productId: number) => {
         if (setSelectedProductId) {
-            setSelectedProductId(productId);  // Met à jour l'ID du produit
+            setSelectedProductId(productId);
         }
-        setPage('produit');  // Change la page vers le composant Product
+        setPage('produit');
     };
 
     // Filtrer les produits en fonction des critères

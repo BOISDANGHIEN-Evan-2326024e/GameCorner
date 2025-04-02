@@ -10,6 +10,6 @@ interface RechercheProps {
 
 export default function Recherche({ setPage }: RechercheProps) {
     return (
-        <Text >Coucou</Text>
+        <Text >Fonctionnalité pas encore implémenté dans l'application ! Revenez plus tard !</Text>
     )
 }
