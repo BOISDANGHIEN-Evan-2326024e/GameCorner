@@ -134,8 +134,19 @@ export default function Product({ productId, setPage, produits, setProduits, cat
         setCurrentImageIndex(index);
     };
 
+    const handleBackPress = () => {
+        setPage('accueil');
+    };
+
     return (
         <ThemedView style={styles.container}>
+            <TouchableOpacity
+                style={styles.backButton}
+                onPress={handleBackPress}
+            >
+                <IconSymbol name="arrow-left" size={24} />
+                <ThemedText style={styles.backButtonText}>Retour</ThemedText>
+            </TouchableOpacity>
             {/* Image Gallery with Pagination - Responsive */}
             <View style={[styles.imageContainer, { height: windowHeight * 0.4 }]}>
                 <Image
