@@ -407,5 +407,22 @@ export const styles = StyleSheet.create({
         color: 'white',
         fontWeight: '500',
         fontSize: 15,
+    },
+    backButton: {
+        position: 'absolute',
+        top: 10,
+        right: 15,
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 8,
+        backgroundColor: 'rgba(0,0,0, 0.3)',
+        borderRadius: 20,
+        zIndex: 10,
+    },
+    backButtonText: {
+        marginLeft: 5,
+        fontSize: 16,
+        fontWeight: '500',
+        color : 'rgba(0, 0, 0, 0.5)',
     }
 });
