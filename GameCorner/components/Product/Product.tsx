@@ -223,7 +223,9 @@ export default function Product({ productId, setPage, produits, setProduits, cat
                 </ThemedView>
 
                 <Collapsible title="Description" style={styles.collapsible}>
-                    <ThemedText style={styles.collapsibleContent}>{product.desc}</ThemedText>
+                    <ThemedText style={styles.collapsibleContent}>
+                        {product.desc}
+                    </ThemedText>
                 </Collapsible>
 
                 <TouchableOpacity
@@ -231,7 +233,7 @@ export default function Product({ productId, setPage, produits, setProduits, cat
                     disabled={isSold}
                     onPress={openBuyModal}
                 >
-                    <Text style={styles.buyButtonText}>{isSold ? "Vendu" : "Acheter"}</Text>
+                    <ThemedText style={styles.buyButtonText}>{isSold ? "Vendu" : "Acheter"}</ThemedText>
                 </TouchableOpacity>
             </ScrollView>
 
@@ -239,120 +241,159 @@ export default function Product({ productId, setPage, produits, setProduits, cat
             <Modal
                 visible={isModalVisible}
                 animationType="slide"
-                transparent={true}
-                onRequestClose={closeBuyModal}
+                transparent={false} // Utilisation d'un fond opaque pour éviter les problèmes d'affichage
+                onRequestClose={closeBuyModal} // Permet de fermer le modal avec le bouton retour
             >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Informations du vendeur</Text>
-                        <Text style={styles.modalText}>Vendeur: {marchandUser ? `${marchandUser.prenom} ${marchandUser.nom}` : "Utilisateur non trouvé"}</Text>
-                        <Text style={styles.modalText}>Contact: {marchandUser ? marchandUser.email : "Non disponible"}</Text>
-
-                        <View style={[styles.contentContainer, { flexDirection: isLargeScreen ? 'row' : 'column' }]}>
-                            {/* Liste des produits du vendeur */}
-                            <View style={[styles.productsListContainer, {
-                                borderRightWidth: isLargeScreen ? 1 : 0,
-                                borderBottomWidth: isLargeScreen ? 0 : 1,
-                                paddingRight: isLargeScreen ? 15 : 0,
-                                paddingBottom: isLargeScreen ? 0 : 15,
-                            }]}>
-                                <Text style={styles.modalTitle}>Autres jeux du vendeur</Text>
-                                <FlatList
-                                    data={[product, ...otherProducts]}
-                                    keyExtractor={(prod) => prod.id.toString()}
-                                    renderItem={({ item }) => (
-                                        <View style={styles.productItem}>
-                                            <Image
-                                                source={{ uri: item.photo[0] }}
-                                                style={styles.productImage}
-                                            />
-                                            <View style={styles.productDetails}>
-                                                <Text style={styles.productName}>{item.name}</Text>
-                                                <Text style={styles.productPrice}>{item.prix} €</Text>
-                                                <Text numberOfLines={2} style={styles.productDescription}>{item.desc}</Text>
-                                                <TouchableOpacity
-                                                    style={[
-                                                        styles.addButton,
-                                                        (item.vendu || cart.some(p => p.id === item.id)) && styles.disabledButton
-                                                    ]}
-                                                    onPress={() => !item.vendu && !cart.some(p => p.id === item.id) && addToCart(item)}
-                                                    disabled={item.vendu || cart.some(p => p.id === item.id)}
-                                                >
-                                                    <Text style={styles.addButtonText}>
-                                                        {item.vendu ? "Produit vendu" : cart.some(p => p.id === item.id) ? "Déjà dans le panier" : "Ajouter au panier"}
-                                                    </Text>
-                                                </TouchableOpacity>
-                                            </View>
-                                        </View>
-                                    )}
-                                />
-                            </View>
-
-                            {/* Panier */}
-                            <View style={[styles.cartContainer, {
-                                paddingLeft: isLargeScreen ? 15 : 0,
-                                paddingTop: isLargeScreen ? 0 : 15,
-                            }]}>
-                                <Text style={styles.cartTitle}>Votre panier</Text>
-
-                                {cart.length === 0 ? (
-                                    <Text style={styles.emptyCartText}>Votre panier est vide</Text>
-                                ) : (
-                                    <>
-                                        <FlatList
-                                            data={cart}
-                                            keyExtractor={(item) => item.id.toString()}
-                                            renderItem={({ item }) => (
-                                                <View style={styles.cartItem}>
-                                                    <Text style={styles.cartItemName}>{item.name}</Text>
-                                                    <Text style={styles.cartItemPrice}>{item.prix} €</Text>
-                                                    <TouchableOpacity
-                                                        style={styles.removeButton}
-                                                        onPress={() => removeFromCart(item.id)}
-                                                    >
-                                                        <Text style={styles.removeButtonText}>Retirer</Text>
-                                                    </TouchableOpacity>
-                                                </View>
-                                            )}
-                                        />
-
-                                        <View style={styles.cartSummary}>
-                                            <Text style={styles.subtotalText}>Sous-total: {subtotal.toFixed(2)} €</Text>
-
-                                            {discount > 0 && (
-                                                <View style={styles.discountContainer}>
-                                                    <Text style={[styles.discountText, { color }]}>
-                                                        Réduction ({discount}%): -{discountAmount.toFixed(2)} €
-                                                    </Text>
-                                                    <Text style={[styles.discountInfoText, { color }]}>
-                                                        {discount === 10
-                                                            ? "Économisez 10% pour l'achat de 2 jeux !"
-                                                            : "Économisez 20% pour l'achat de 3 jeux ou plus !"}
-                                                    </Text>
-                                                </View>
-                                            )}
-
-                                            <Text style={styles.totalText}>Total: {total.toFixed(2)} €</Text>
-
-                                            <TouchableOpacity
-                                                style={styles.checkoutButton}
-                                                onPress={handlePurchase}
-                                            >
-                                                <Text style={styles.checkoutButtonText}>Finaliser l'achat</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </>
-                                )}
-                            </View>
-                        </View>
-
+                <View style={{ flex: 1, backgroundColor: '#f9f9f9', padding: 10 }}>
+                    {/* En-tête avec bouton de fermeture */}
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#6A42F4' }}>
+                            Informations d'achat
+                        </Text>
                         <TouchableOpacity
-                            style={styles.closeButton}
+                            style={{ padding: 10, backgroundColor: '#dc3545', borderRadius: 8 }}
                             onPress={closeBuyModal}
                         >
-                            <Text style={styles.closeButtonText}>Fermer</Text>
+                            <Text style={{ color: 'white', fontWeight: 'bold' }}>Fermer</Text>
                         </TouchableOpacity>
                     </View>
+
+                    {/* Contenu principal */}
+                    <ScrollView>
+                        {/* Infos vendeur */}
+                        <View style={{ backgroundColor: '#FFFFFF', padding: 10, borderRadius: 8, marginBottom: 10 }}>
+                            <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 5, color: '#6A42F4' }}>
+                                Vendeur
+                            </Text>
+                            <Text style={{ marginBottom: 5 }}>
+                                {marchandUser ? `${marchandUser.prenom} ${marchandUser.nom}` : "Utilisateur non trouvé"}
+                            </Text>
+                            <Text>
+                                Contact: {marchandUser ? marchandUser.email : "Non disponible"}
+                            </Text>
+                        </View>
+
+                        {/* Autres jeux du vendeur */}
+                        <View style={{ backgroundColor: '#FFFFFF', padding: 10, borderRadius: 8, marginBottom: 10 }}>
+                            <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10, color: '#6A42F4' }}>
+                                Autres jeux du vendeur
+                            </Text>
+                            {[product, ...otherProducts].map(item => (
+                                <View
+                                    key={item.id}
+                                    style={{
+                                        flexDirection: 'row',
+                                        padding: 10,
+                                        borderBottomWidth: 1,
+                                        borderBottomColor: '#e0e0e0',
+                                        marginBottom: 8
+                                    }}
+                                >
+                                    <Image
+                                        source={{ uri: item.photo[0] }}
+                                        style={{ width: 60, height: 60, borderRadius: 5 }}
+                                    />
+                                    <View style={{ flex: 1, marginLeft: 10 }}>
+                                        <Text numberOfLines={1} style={{ fontWeight: 'bold' }}>
+                                            {item.name}
+                                        </Text>
+                                        <Text style={{ color: '#6A42F4', fontWeight: 'bold' }}>
+                                            {item.prix} €
+                                        </Text>
+                                        <TouchableOpacity
+                                            style={{
+                                                padding: 8,
+                                                borderRadius: 5,
+                                                backgroundColor: (item.vendu || cart.some(p => p.id === item.id))
+                                                    ? '#cccccc'
+                                                    : '#28a745',
+                                                alignItems: 'center',
+                                                marginTop: 5
+                                            }}
+                                            onPress={() => {
+                                                if (!item.vendu && !cart.some(p => p.id === item.id)) {
+                                                    addToCart(item);
+                                                }
+                                            }}
+                                            disabled={item.vendu || cart.some(p => p.id === item.id)}
+                                        >
+                                            <Text style={{ color: 'white', fontSize: 12 }}>
+                                                {item.vendu ? "Vendu" : cart.some(p => p.id === item.id) ? "Dans panier" : "Ajouter"}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            ))}
+                        </View>
+
+                        {/* Panier */}
+                        <View style={{ backgroundColor: '#FFFFFF', padding: 10, borderRadius: 8, marginBottom: 60 }}>
+                            <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10, color: '#6A42F4', textAlign: 'center' }}>
+                                Votre panier
+                            </Text>
+
+                            {cart.length === 0 ? (
+                                <Text style={{ textAlign: 'center', fontStyle: 'italic', padding: 20 }}>
+                                    Panier vide
+                                </Text>
+                            ) : (
+                                <>
+                                    {cart.map(item => (
+                                        <View
+                                            key={item.id}
+                                            style={{
+                                                flexDirection: 'row',
+                                                justifyContent: 'space-between',
+                                                alignItems: 'center',
+                                                padding: 8,
+                                                borderBottomWidth: 1,
+                                                borderBottomColor: '#e0e0e0'
+                                            }}
+                                        >
+                                            <Text numberOfLines={1} style={{ flex: 1 }}>
+                                                {item.name}
+                                            </Text>
+                                            <Text style={{ fontWeight: 'bold', color: '#6A42F4', marginHorizontal: 10 }}>
+                                                {item.prix} €
+                                            </Text>
+                                            <TouchableOpacity
+                                                style={{
+                                                    backgroundColor: '#dc3545',
+                                                    padding: 8,
+                                                    borderRadius: 5
+                                                }}
+                                                onPress={() => removeFromCart(item.id)}
+                                            >
+                                                <Text style={{ color: 'white', fontWeight: 'bold' }}>X</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    ))}
+
+                                    {/* Total */}
+                                    <View style={{ marginTop: 15 }}>
+                                        <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#6A42F4', textAlign: 'center' }}>
+                                            Total: {total.toFixed(2)} €
+                                        </Text>
+                                        <TouchableOpacity
+                                            style={{
+                                                backgroundColor: '#6A42F4',
+                                                padding: 15,
+                                                borderRadius: 8,
+                                                alignItems: 'center',
+                                                marginTop: 15,
+                                                marginBottom: 10
+                                            }}
+                                            onPress={handlePurchase}
+                                        >
+                                            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>
+                                                ACHETER MAINTENANT
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </>
+                            )}
+                        </View>
+                    </ScrollView>
                 </View>
             </Modal>
         </ThemedView>

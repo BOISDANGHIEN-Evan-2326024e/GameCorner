@@ -60,7 +60,7 @@ export default function Accueil({ setPage, setSelectedProductId, users, produits
             <ThemedText style={styles.shortcutText}>Rechercher</ThemedText>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.shortcutItem} onPress={() => setPage && setPage("user")}>
+          <TouchableOpacity style={styles.shortcutItem} onPress={() => setPage && setPage("test")}>
             <View style={styles.shortcutIconContainer}>
               <MaterialCommunityIcons name="controller-classic" size={24} color="#6A42F4" />
             </View>

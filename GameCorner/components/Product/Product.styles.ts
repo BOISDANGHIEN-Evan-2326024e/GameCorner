@@ -1,56 +1,82 @@
 import { StyleSheet, Dimensions } from "react-native";
 
-const PURPLE_THEME = 'rgba(130, 87, 254, 1.00)';
+const COLORS = {
+    primary: '#6A42F4',
+    primaryLight: '#f0ebff',
+    primaryBorder: '#e6dbff',
+    secondary: '#FF4757',
+    text: '#333333',
+    textLight: '#666666',
+    background: '#f9f9f9',
+    card: '#FFFFFF',
+    border: '#e0e0e0',
+    success: '#28a745',
+    danger: '#dc3545',
+    gray: '#aaaaaa',
+    disabled: '#cccccc',
+    shadow: 'rgba(0, 0, 0, 0.2)'
+};
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+const isTablet = windowWidth > 600;
 
 export const styles = StyleSheet.create({
+    // Main container
     container: {
         flex: 1,
-        backgroundColor: '#f9f9f9',
+        backgroundColor: COLORS.background,
     },
+    
+    // Error handling
     errorContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 20,
+        padding: 24,
     },
     errorText: {
         fontSize: 18,
-        marginBottom: 20,
+        marginBottom: 24,
+        color: COLORS.text,
+        textAlign: 'center',
     },
     goBackButton: {
-        backgroundColor: PURPLE_THEME,
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        borderRadius: 8,
+        backgroundColor: COLORS.primary,
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 12,
+        elevation: 3,
+        shadowColor: COLORS.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
     },
     goBackButtonText: {
         color: 'white',
         fontWeight: 'bold',
+        fontSize: 16,
     },
-    // Image Gallery Styles - Updated for responsiveness
+    
+    // Image Gallery - Enhanced for better viewing
     imageContainer: {
         height: windowHeight * 0.4,
         width: '100%',
-        backgroundColor: '#f5f5f5',
+        backgroundColor: COLORS.primaryLight,
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
     },
     mainImage: {
         width: windowWidth * 0.85,
-        height: windowWidth * 0.85 * 0.8, // Maintain aspect ratio
-        borderRadius: 12,
-        backgroundColor: 'white',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
+        height: windowWidth * 0.85 * 0.8,
+        borderRadius: 16,
+        backgroundColor: COLORS.card,
+        shadowColor: COLORS.shadow,
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+        elevation: 4,
     },
     pagination: {
         flexDirection: 'row',
@@ -65,14 +91,14 @@ export const styles = StyleSheet.create({
         width: 8,
         height: 8,
         borderRadius: 4,
-        backgroundColor: '#ccc',
+        backgroundColor: COLORS.border,
         marginHorizontal: 5,
     },
     paginationDotActive: {
-        backgroundColor: PURPLE_THEME,
-        width: 10,
-        height: 10,
-        borderRadius: 5,
+        backgroundColor: COLORS.primary,
+        width: 12,
+        height: 12,
+        borderRadius: 6,
     },
     thumbnailScroll: {
         width: '100%',
@@ -90,18 +116,24 @@ export const styles = StyleSheet.create({
         marginHorizontal: 5,
         borderWidth: 2,
         borderColor: 'transparent',
-        borderRadius: 6,
-        backgroundColor: 'white',
+        borderRadius: 10,
+        backgroundColor: COLORS.card,
+        shadowColor: COLORS.shadow,
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        elevation: 2,
     },
     thumbnailActive: {
-        borderColor: PURPLE_THEME,
+        borderColor: COLORS.primary,
     },
     thumbnail: {
         width: 60,
         height: 60,
-        borderRadius: 6,
+        borderRadius: 8,
     },
-    // Content Styles
+    
+    // Content Styles - Improved clarity
     contentScroll: {
         flex: 1,
     },
@@ -109,320 +141,361 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 16,
-        paddingVertical: 16,
+        paddingHorizontal: 20,
+        paddingVertical: 18,
         borderBottomWidth: 1,
-        borderBottomColor: '#eee',
+        borderBottomColor: COLORS.border,
+        backgroundColor: COLORS.card,
     },
     productTitle: {
-        fontSize: 22,
+        fontSize: 24,
         fontWeight: 'bold',
         flex: 3,
-        color: '#333',
+        color: COLORS.text,
     },
     productPrice: {
-        fontSize: 22,
+        fontSize: 24,
         fontWeight: 'bold',
-        color: PURPLE_THEME,
+        color: COLORS.primary,
         flex: 1,
         textAlign: 'right',
     },
-    // Styles pour les bulles d'information
+    
+    // Info bubbles - More cohesive appearance
     infoContainer: {
-        paddingHorizontal: 16,
-        paddingVertical: 12,
+        paddingHorizontal: 20,
+        paddingVertical: 16,
         flexDirection: 'row',
         flexWrap: 'wrap',
         marginTop: 5,
+        backgroundColor: COLORS.card,
     },
     infoBubble: {
-        backgroundColor: '#f0ebff',
-        paddingHorizontal: 14,
-        paddingVertical: 8,
+        backgroundColor: COLORS.primaryLight,
+        paddingHorizontal: 16,
+        paddingVertical: 10,
         borderRadius: 20,
         marginRight: 10,
         marginBottom: 10,
         borderWidth: 1,
-        borderColor: '#e6dbff',
+        borderColor: COLORS.primaryBorder,
+        elevation: 1,
+        shadowColor: COLORS.shadow,
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 1,
     },
     infoBubbleText: {
         fontSize: 14,
-        color: '#555',
-        fontWeight: '500',
+        color: COLORS.text,
+        fontWeight: '600',
     },
+    
+    // Vendor section - Better visibility
     vendorInfo: {
-        paddingHorizontal: 16,
-        paddingVertical: 16,
+        marginTop: 8,
+        paddingHorizontal: 20,
+        paddingVertical: 18,
         borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-        backgroundColor: '#fcfcfc',
+        borderTopWidth: 1,
+        borderColor: COLORS.border,
+        backgroundColor: COLORS.card,
     },
     vendorText: {
-        fontSize: 15,
-        color: '#555',
+        fontSize: 16,
+        color: COLORS.textLight,
         fontWeight: '500',
     },
-    // Styles pour la description (seul élément en Collapsible)
+    
+    // Description section - Fixed to work with component
     collapsible: {
         marginVertical: 15,
+        backgroundColor: COLORS.card,
+        borderRadius: 10,
+        marginHorizontal: 10,
+        overflow: 'hidden',
+        elevation: 2,
+        shadowColor: COLORS.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
     },
     collapsibleContent: {
-        paddingHorizontal: 16,
-        paddingVertical: 12,
-        lineHeight: 22,
-        color: '#444',
+        paddingHorizontal: 20,
+        paddingVertical: 16,
+        lineHeight: 24,
+        fontSize: 15,
+        backgroundColor: COLORS.card,
+        color: COLORS.textLight,
     },
+    
+    // Buy button - More prominent
     buyButton: {
-        backgroundColor: PURPLE_THEME,
-        marginHorizontal: 20,
+        backgroundColor: COLORS.primary,
+        marginHorizontal: 24,
         marginVertical: 25,
-        paddingVertical: 14,
-        borderRadius: 10,
+        paddingVertical: 16,
+        borderRadius: 12,
         alignItems: 'center',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 3.84,
-        elevation: 5,
+        shadowColor: COLORS.shadow,
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.3,
+        shadowRadius: 5,
+        elevation: 6,
     },
     soldButton: {
-        backgroundColor: '#aaa',
+        backgroundColor: COLORS.gray,
     },
     buyButtonText: {
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 18,
     },
-    // Modal Styles - Improved for responsiveness
+    
+    // Modal styles - Enhanced for scrolling on mobile
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        margin: 0, // Important pour couvrir tout l'écran
+        padding: 0, // Pas de padding qui réduirait l'espace
     },
     modalContent: {
-        backgroundColor: 'white',
-        borderRadius: 16,
-        padding: 20,
-        width: windowWidth > 600 ? '80%' : '95%',
-        maxHeight: '90%',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 5
-        },
-        shadowOpacity: 0.3,
-        shadowRadius: 6,
-        elevation: 8,
+        backgroundColor: COLORS.card,
+        borderRadius: 20,
+        padding: 15, // Padding réduit sur mobile
+        width: isTablet ? '80%' : '92%',
+        height: isTablet ? '90%' : '80%', // Hauteur fixe au lieu de maxHeight
+        shadowColor: COLORS.shadow,
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.4,
+        shadowRadius: 8,
+        elevation: 10,
+    },
+    modalScrollView: {
+        flex: 1,
     },
     modalTitle: {
-        fontSize: 20,
+        fontSize: isTablet ? 22 : 18, // Taille réduite sur mobile
         fontWeight: 'bold',
-        marginBottom: 12,
+        marginBottom: 12, // Marge réduite
         textAlign: 'center',
-        color: PURPLE_THEME,
+        color: COLORS.primary,
     },
     modalText: {
-        fontSize: 16,
-        marginBottom: 8,
-        color: '#444',
+        fontSize: isTablet ? 16 : 14, // Taille réduite sur mobile
+        marginBottom: 8, // Marge réduite
+        color: COLORS.textLight,
+        lineHeight: 20,
     },
-    // Responsive layout adjustments for the modal content
+    
+    // Responsive layout - Completely redesigned for small screens
     contentContainer: {
-        flexDirection: windowWidth > 600 ? 'row' : 'column',
-        marginTop: 20,
+        flexDirection: isTablet ? 'row' : 'column',
+        marginTop: isTablet ? 20 : 10, // Marge réduite sur mobile
     },
     productsListContainer: {
         flex: 1,
-        borderRightWidth: windowWidth > 600 ? 1 : 0,
-        borderBottomWidth: windowWidth > 600 ? 0 : 1,
-        borderRightColor: '#eee',
-        borderBottomColor: '#eee',
-        paddingRight: windowWidth > 600 ? 15 : 0,
-        paddingBottom: windowWidth > 600 ? 0 : 15,
-        maxHeight: windowWidth > 600 ? 450 : 250,
+        borderRightWidth: isTablet ? 1 : 0,
+        borderBottomWidth: isTablet ? 0 : 1,
+        borderColor: COLORS.border,
+        paddingRight: isTablet ? 15 : 0,
+        paddingBottom: isTablet ? 0 : 10,
+        height: isTablet ? 450 : windowHeight * 0.23, // Hauteur proportionnelle à l'écran
     },
     cartContainer: {
         flex: 1,
-        paddingLeft: windowWidth > 600 ? 15 : 0,
-        paddingTop: windowWidth > 600 ? 0 : 15,
-        maxHeight: windowWidth > 600 ? 450 : 300,
+        paddingLeft: isTablet ? 15 : 0,
+        paddingTop: isTablet ? 0 : 10,
+        height: isTablet ? 450 : windowHeight * 0.23, // Hauteur proportionnelle à l'écran
     },
     cartTitle: {
-        fontSize: 18,
+        fontSize: isTablet ? 18 : 16, // Taille réduite sur mobile
         fontWeight: 'bold',
-        marginBottom: 12,
+        marginBottom: isTablet ? 16 : 8, // Marge réduite
         textAlign: 'center',
-        color: PURPLE_THEME,
+        color: COLORS.primary,
     },
     emptyCartText: {
         textAlign: 'center',
         fontStyle: 'italic',
-        marginTop: 30,
-        marginBottom: 30,
-        color: '#888',
-        fontSize: 15,
+        marginTop: isTablet ? 30 : 15, // Marge réduite
+        marginBottom: isTablet ? 30 : 15, // Marge réduite
+        color: COLORS.textLight,
+        fontSize: isTablet ? 15 : 14, // Taille réduite
     },
+    
+    // Product items in modal - Taille réduite pour mobile
     productItem: {
         flexDirection: 'row',
         borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-        paddingVertical: 12,
-        paddingHorizontal: 8,
+        borderBottomColor: COLORS.border,
+        paddingVertical: isTablet ? 14 : 8, // Padding réduit
+        paddingHorizontal: isTablet ? 8 : 4, // Padding réduit
     },
     productImage: {
-        width: 90,
-        height: 90,
+        width: isTablet ? 90 : 70, // Taille réduite
+        height: isTablet ? 90 : 70, // Taille réduite
         borderRadius: 8,
-        backgroundColor: '#f9f9f9',
+        backgroundColor: COLORS.background,
     },
     productDetails: {
         flex: 1,
-        marginLeft: 12,
+        marginLeft: isTablet ? 16 : 10, // Marge réduite
         justifyContent: 'space-between',
     },
     productName: {
-        fontSize: 16,
+        fontSize: isTablet ? 16 : 14, // Taille réduite
         fontWeight: 'bold',
-        color: '#333',
-        marginBottom: 4,
+        color: COLORS.text,
+        marginBottom: isTablet ? 6 : 4, // Marge réduite
     },
     productDescription: {
-        fontSize: 13,
-        color: '#666',
-        marginVertical: 5,
-        lineHeight: 18,
+        fontSize: isTablet ? 14 : 12, // Taille réduite
+        color: COLORS.textLight,
+        marginVertical: isTablet ? 5 : 3, // Marge réduite
+        lineHeight: isTablet ? 20 : 16, // Hauteur de ligne réduite
     },
     addButton: {
-        backgroundColor: '#28a745',
-        padding: 8,
-        borderRadius: 6,
+        backgroundColor: COLORS.success,
+        padding: isTablet ? 10 : 6, // Padding réduit
+        borderRadius: 8,
         alignItems: 'center',
-        marginTop: 5,
+        marginTop: isTablet ? 5 : 3, // Marge réduite
     },
     addButtonText: {
         color: 'white',
-        fontSize: 13,
-        fontWeight: '500',
+        fontSize: isTablet ? 14 : 12, // Taille réduite
+        fontWeight: '600',
     },
     disabledButton: {
-        backgroundColor: '#ccc',
+        backgroundColor: COLORS.disabled,
     },
+    
+    // Cart items styling - Plus compact sur mobile
     cartItem: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-        paddingVertical: 12,
+        borderBottomColor: COLORS.border,
+        paddingVertical: isTablet ? 14 : 8, // Padding réduit
     },
     cartItemName: {
         flex: 2,
-        fontSize: 15,
-        color: '#333',
+        fontSize: isTablet ? 15 : 13, // Taille réduite
+        color: COLORS.text,
     },
     cartItemPrice: {
         flex: 1,
         textAlign: 'right',
         fontWeight: '600',
-        color: PURPLE_THEME,
-        fontSize: 15,
+        color: COLORS.primary,
+        fontSize: isTablet ? 16 : 14, // Taille réduite
     },
     removeButton: {
-        backgroundColor: '#dc3545',
-        padding: 6,
-        borderRadius: 6,
-        marginLeft: 10,
+        backgroundColor: COLORS.danger,
+        padding: isTablet ? 8 : 6, // Padding réduit
+        borderRadius: 8,
+        marginLeft: isTablet ? 10 : 6, // Marge réduite
     },
     removeButtonText: {
         color: 'white',
-        fontSize: 12,
-        fontWeight: '500',
+        fontSize: isTablet ? 13 : 11, // Taille réduite
+        fontWeight: '600',
     },
+    
+    // Cart summary - Plus compact sur mobile
     cartSummary: {
-        marginTop: 20,
+        marginTop: isTablet ? 20 : 10, // Marge réduite
         borderTopWidth: 1,
-        borderTopColor: '#eee',
-        paddingTop: 15,
+        borderTopColor: COLORS.border,
+        paddingTop: isTablet ? 15 : 10, // Padding réduit
     },
     subtotalText: {
-        fontSize: 15,
-        marginBottom: 6,
-        color: '#444',
+        fontSize: isTablet ? 16 : 14, // Taille réduite
+        marginBottom: isTablet ? 8 : 4, // Marge réduite
+        color: COLORS.text,
     },
     discountContainer: {
-        marginVertical: 8,
-        padding: 10,
-        backgroundColor: '#f8f9fa',
-        borderRadius: 8,
-        borderLeftWidth: 3,
-        borderLeftColor: PURPLE_THEME,
+        marginVertical: isTablet ? 10 : 6, // Marge réduite
+        padding: isTablet ? 12 : 8, // Padding réduit
+        backgroundColor: COLORS.primaryLight,
+        borderRadius: 10,
+        borderLeftWidth: 4,
+        borderLeftColor: COLORS.primary,
     },
     discountText: {
         fontWeight: 'bold',
-        fontSize: 15,
+        fontSize: isTablet ? 16 : 14, // Taille réduite
+        color: COLORS.text,
     },
     discountInfoText: {
-        fontSize: 13,
+        fontSize: isTablet ? 14 : 12, // Taille réduite
         fontStyle: 'italic',
-        marginTop: 3,
+        marginTop: isTablet ? 4 : 2, // Marge réduite
+        color: COLORS.textLight,
     },
     totalText: {
         fontWeight: 'bold',
-        fontSize: 18,
-        marginVertical: 12,
-        color: PURPLE_THEME,
+        fontSize: isTablet ? 20 : 16, // Taille réduite
+        marginVertical: isTablet ? 14 : 8, // Marge réduite
+        color: COLORS.primary,
     },
+    
+    // Buttons - Plus petits mais toujours accessibles sur mobile
     checkoutButton: {
-        backgroundColor: PURPLE_THEME,
-        padding: 14,
-        borderRadius: 8,
+        backgroundColor: COLORS.primary,
+        padding: isTablet ? 16 : 12, // Padding réduit
+        borderRadius: 12,
         alignItems: 'center',
-        marginTop: 12,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        elevation: 4,
+        marginTop: isTablet ? 12 : 8, // Marge réduite
+        shadowColor: COLORS.shadow,
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 5,
     },
     checkoutButtonText: {
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: isTablet ? 18 : 15, // Taille réduite
     },
     closeButton: {
-        backgroundColor: '#6c757d',
-        padding: 12,
-        borderRadius: 8,
+        backgroundColor: COLORS.gray,
+        padding: isTablet ? 14 : 10, // Padding réduit
+        borderRadius: 12,
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: isTablet ? 20 : 12, // Marge réduite
     },
     closeButtonText: {
         color: 'white',
-        fontWeight: '500',
-        fontSize: 15,
+        fontWeight: '600',
+        fontSize: isTablet ? 16 : 14, // Taille réduite
     },
+    
+    // Navigation
     backButton: {
         position: 'absolute',
-        top: 10,
-        right: 15,
+        top: 16,
+        right: 16,
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 8,
-        backgroundColor: 'rgba(0,0,0, 0.3)',
-        borderRadius: 20,
+        padding: 10,
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        borderRadius: 25,
         zIndex: 10,
+        shadowColor: COLORS.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        elevation: 3,
     },
     backButtonText: {
-        marginLeft: 5,
+        marginLeft: 6,
         fontSize: 16,
-        fontWeight: '500',
-        color : 'rgba(0, 0, 0, 0.5)',
+        fontWeight: '600',
+        color: COLORS.text,
     }
 });
